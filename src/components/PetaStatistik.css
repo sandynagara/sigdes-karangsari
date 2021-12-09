@@ -1,0 +1,93 @@
+.leaflet-container {
+    background-color:rgba(255, 255, 255, 0);
+}
+
+.leaflet-tooltip-right::before {
+    z-index: -100;
+    border-right-color:rgba(255, 255, 255, 0)
+}
+
+.leaflet-tooltip-left:before{
+    z-index: -100;
+    border-left-color:rgba(255, 255, 255, 0)
+}
+
+.leaflet-tooltip-left{
+    margin-left: 15px;
+}
+
+.leaflet-tooltip-right{
+    margin-left: -15px;
+}
+
+.peta-statistik{
+    width: 400px;
+    height: 850px;
+}
+
+.label-dusun{
+    background-color: rgba(255, 255, 255, 0);
+    color: white;
+    border-color: rgba(255, 255, 255, 0);
+}
+
+.label-rt{
+    background-color: rgba(255, 255, 255, 0);
+    color: white;
+    border-color: rgba(255, 255, 255, 0);
+}
+
+.container-peta{
+    padding: 20px 0px;
+    background-color: rgb(0, 0, 0);    
+}
+
+.data-statistik-peta{
+    text-align: left;
+    padding: 20px 30px;
+    border-radius: 20px;
+    margin-bottom: 20px;
+}
+
+.data-logo{
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    background-color: rgb(255, 255, 255);
+    padding: 20px 10px;
+    border-radius: 20px;
+}
+
+.data-logo img{
+    width: 30px;
+}
+
+.data-logo p{
+    font-size: 12px;
+    margin: 0px;
+}
+
+.list-item-statistik{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-gap: 10px;
+}
+
+.tipeStatistik{
+    margin: 30px 5px;
+    border-style: solid;
+    border-color: rgb(255, 255, 255);
+    color: rgb(255, 255, 255);
+    font-weight: bold;
+    border-width: 0px 0px 2px 0px;
+    padding: 5px 15px;
+    font-size: 12px;
+}
+
+.tipeStatistik:hover{
+    color: rgb(255, 251, 0);
+    border-color: rgb(255, 251, 0);
+    cursor: pointer;
+}

@@ -1,0 +1,59 @@
+.statistik{
+    background-color: rgba(0, 0, 0, 0);
+    margin-top: 50px;
+    display: grid;
+    padding: 0% 20%;
+    justify-content: center;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-gap: 50px;
+}
+
+.judul{
+    font-size: 42px;
+    color: black;
+    font-weight: bold;
+}
+
+.item-statistik{
+    background-color: rgb(255, 255, 255);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    width:300px;
+    padding: 50px 0px; 
+    border-radius: 20px;
+    border: solid rgba(0, 0, 0,0.5 );
+    border-width: 0px;
+}
+
+.data-statistik{
+    font-size: 80px;
+}
+
+.judul-data{
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.icon-statistik{
+    width: 40px;
+    height: 40px;
+}
+
+@media only screen and (max-width: 1200px) {
+    .statistik {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+@media only screen and (max-width: 700px) {
+    .statistik {
+      grid-template-columns: 1fr;
+    }
+    .judul{
+        font-size: 35px;  
+    }
+  }
+  
+ 

@@ -1,0 +1,35 @@
+.navbar-peta{
+    width: 55px;
+    height: 100vh;
+    background-color: black;
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    z-index: 10001;
+}
+
+
+.menu-logo{
+    padding: 8px 10px 12px 10px;
+    border-radius: 5px;
+    margin: 8px;
+    align-items: center;
+    justify-content: center;
+    color: rgb(255, 255, 255);
+    transition: 500ms;
+}
+
+.menu-name{
+    margin-left: 8px;
+    font-size: 12px;
+    border-radius: 5px;
+    padding: 3px 5px;
+    background-color: white;
+    color: rgb(0, 0, 0);
+}
+
+.menu-logo:hover{
+    background-color: rgb(255, 255, 255);
+    color: black;
+    cursor: pointer;
+}

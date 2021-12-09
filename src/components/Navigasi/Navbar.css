@@ -1,0 +1,44 @@
+.item-center{
+    margin-right: 20px;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.menu{
+    color: white;
+    padding: 20px 10px
+}
+
+.menu:hover{
+    border-bottom: solid rgb(255, 255, 255);
+    border-width: 4px;
+    border-color: white;
+    cursor: pointer;
+}
+
+a{
+    text-decoration: none;
+}
+
+.nav-logo{
+   position: absolute;
+   left: 20px;
+}
+
+.nav-logo:hover{
+    cursor: pointer;
+}
+
+.nav{
+    padding: 0px 20px; 
+    top: 0;
+    padding: 0px;
+    width: 100vw;
+    height: 70px;
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    z-index: 99999;
+}
