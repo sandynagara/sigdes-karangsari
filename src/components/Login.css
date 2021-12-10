@@ -19,6 +19,12 @@
     border: solid 1px;
 }
 
+.input-admin:focus {
+    border-color: rgb(0, 102, 255);
+    outline-width: 0;
+}
+  
+
 input:focus-visible{
     border-color: aqua;
     border-bottom: 1px solid red;

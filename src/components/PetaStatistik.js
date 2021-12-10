@@ -26,17 +26,28 @@ function PetaStatistik() {
   };
 
   var eventHandle = (feature, layer) => {
-    if (tipeFilter == "dusun") {
-      layer.bindTooltip(feature.properties.nama, {
-        permanent: true,
-        className: "label-dusun",
-      });
-    } else if (tipeFilter == "rt"){
-      layer.bindTooltip(feature.properties.nama, {
-        permanent: true,
-        className: "label-rt",
-      });
-    }
+      function labelPosition(){
+        if (tipeFilter == "dusun") {
+          layer.bindTooltip(feature.properties.nama, {
+            permanent: true,
+            className: "label-dusun",
+          });
+        } else if (tipeFilter == "rt"){
+          layer.bindTooltip(feature.properties.nama, {
+            direction: 'left',
+            permanent: true,
+            className: "label-rt",
+            sticky: true,
+            opacity: 0.75,
+          });
+          layer.bindTooltip(feature.properties.nama, {
+            direction: 'right',
+            permanent: true,
+            className: "label-rt",
+          });
+        }
+      }
+      labelPosition()
       layer.on({
         mouseover: () => (
           layer.setStyle({ 

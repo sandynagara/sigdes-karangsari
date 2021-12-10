@@ -1,13 +1,21 @@
 import { MapContainer, TileLayer, GeoJSON,useMap, useMapEvents } from "react-leaflet";
-import React, { useEffect, useState ,memo } from "react";
+import React, { useEffect, useState ,useRef } from "react";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import * as WMS from "leaflet.wms";
 
-function Peta({ queryNama,queryBangunan,setOpen }) {
+function Peta({ queryNama,queryBangunan,setOpen,inputBasemap,opacityBasemap }) {
   const [position, setPosition] = useState(false);
+  const [changeBasemap, setChangeBasemap] = useState(true);
   const [selectedGeojson, setSelectedGeojson] = useState(false);
   const [first, setFirst] = useState(true)
+  const [map, setMap] = useState(false)
+
+  const tileRef = useRef();
+
+  useEffect(() => {
+    setChangeBasemap(true);
+  }, [inputBasemap]);
 
   var panggil = (cb, url) => {
     fetch(url)
@@ -118,6 +126,19 @@ function Peta({ queryNama,queryBangunan,setOpen }) {
     return <GeoJSON data={selectedGeojson} style={{color:"yellow"}} />
   }
 
+  const TileLayerHandler = () => {
+    setChangeBasemap(false);
+    return <TileLayer ref={tileRef} url={inputBasemap} maxZoom={22} />;
+  };
+
+  useEffect(() => {
+    if(map){
+      tileRef.current
+      .getContainer()
+      .style.setProperty("filter", `opacity(${opacityBasemap}%)`);
+    }
+  }, [opacityBasemap])
+
   return (
     <MapContainer
       center={[-7.864220975, 110.138661812]}
@@ -125,13 +146,11 @@ function Peta({ queryNama,queryBangunan,setOpen }) {
       maxZoom={22}
       style={{ width: "100vw", height: "100vh" }}
       zoomControl={false}
+      whenReady={(e)=>setMap(e)}
     >
-      {position ? <Changedview center={position}/> : ""}
-      {selectedGeojson ? <SelectedLayerHandler/> :""}
-      <TileLayer
-        maxZoom={22}
-        url="https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}"
-      />
+      {position && <Changedview center={position}/> }
+      {selectedGeojson && <SelectedLayerHandler/> }
+      {changeBasemap ? <TileLayerHandler /> : <TileLayer ref={tileRef} url={inputBasemap} maxZoom={22} />}
       <CustomWMSLayer
         url="http://localhost:8080/geoserver/data/wms"
         layers={["data:bangunan", "data:batasdusun","data:landuse"]}

@@ -27,7 +27,7 @@ function Login({open}) {
 
     return (
         <div className="login-container" style={open == "Admin" ? { marginLeft: "55px" } : { marginLeft: "-350px" }}>
-             <h4>Log in</h4>
+             <h4>Login</h4>
             <form onSubmit={submitHandler}>
                 <input className="input-admin" name="username" type="text" placeholder="Username" ></input>
                 <input className="input-admin" name="password" type="password" placeholder="Password" ></input>
