@@ -10,17 +10,23 @@ function Peta({ queryNama,queryBangunan,setOpen,inputBasemap,opacityBasemap }) {
   const [selectedGeojson, setSelectedGeojson] = useState(false);
   const [first, setFirst] = useState(true)
   const [map, setMap] = useState(false)
+  const [layerBangunanState, setLayerBangunanState] = useState(false)
 
   const tileRef = useRef();
+  const layer = useRef("s");
 
   useEffect(() => {
     setChangeBasemap(true);
   }, [inputBasemap]);
 
   var panggil = (cb, url) => {
-    fetch(url)
+    fetch(url,{
+        method: 'GET',
+        credentials: 'include'
+      })
       .then((respond) => respond.json())
-      .then((json) => cb(json));
+      .then((json) => cb(json))
+      .catch((err)=>console.log(err));
   };
 
   var Changedview = center => {
@@ -53,29 +59,46 @@ function Peta({ queryNama,queryBangunan,setOpen,inputBasemap,opacityBasemap }) {
     return url + L.Util.getParamString(params, url, true);
   };
 
+  var batasDusun,layerBangunan,layerLanduse
+
   var CustomWMSLayer =  (props) => {
     var map = useMap();
- 
-    if(first){
-      console.log("hitung")
-      const { url, options, layers } = props;
 
-      // Add WMS source/layers
-      const source = WMS.source(url, options);
+      if(first){
+        const { url, options, layers } = props;
 
-      // var Basemap = source.getLayer(layers[2]),
-      var batasDusun = source.getLayer(layers[1]),
-        layerBangunan = source.getLayer(layers[0]),
+        // Add WMS source/layers
+        const source = WMS.source(url, options);
+
+        // var Basemap = source.getLayer(layers[2]),
+        batasDusun = source.getLayer(layers[1])
+        layerBangunan = source.getLayer(layers[0])
         layerLanduse = source.getLayer(layers[2])
 
-      // Basemap.addTo(map);
-      layerLanduse.addTo(map)
-      batasDusun.addTo(map);
-      layerBangunan.addTo(map);
-      setFirst(false)
-    }
-      
+        console.log(layerLanduse,"landuse")
+        layerLanduse.addTo(map)
+        batasDusun.addTo(map);
+        layerBangunan.addTo(map);
 
+        console.log(layerBangunan,"bangunan")
+        setFirst(false)
+
+      }else{
+        // console.log(map)
+        // var layer = map._layers[73]._source
+        // console.log(layer)
+        // layer.setOpacity(0.5)
+        // console.log(map)
+        // console.log(layerBangunanState)
+        // map.removeLayer(layerBangunanState)
+        map.eachLayer(function(layer) {
+            layer.setOpacity(opacityBasemap)
+      });
+      }
+
+
+  
+      // setLayerBangunanState(layerBangunan)
     return null;
   }
 
@@ -86,21 +109,29 @@ function Peta({ queryNama,queryBangunan,setOpen,inputBasemap,opacityBasemap }) {
       click(e) {
         console.log(e.latlng, map);
         var url = getFeatureInfoUrl(
-          "http://localhost:8080/geoserver/data/wms?",
-          map,
-          e
+          "http://localhost:8080/geoserver/data/wms?",map,e
         );
         panggil((result) => {
           console.log(result);
           if (result.crs != null) {
             var numb = result.features[0].id.match(/\d/g);
             numb = numb.join("");
-            var url =  "http://localhost:5000/api/bangunan/"+numb
+            var url =  "http://localhost:5000/api/bangunanAdmin/"+numb
             panggil((result)=>{
-              console.log(result.feature)
-              queryBangunan(result)
-              setSelectedGeojson(result.feature)
-              setOpen("Bangunan")
+              console.log(result)
+              if(result==="unauthorized"){
+                var url =  "http://localhost:5000/api/bangunanUmum/"+numb
+                panggil((result)=>{
+                  queryBangunan(result)
+                  setSelectedGeojson(result.feature)
+                  setOpen("Bangunan")
+                },url
+                )
+              }else{
+                queryBangunan(result)
+                setSelectedGeojson(result.feature)
+                setOpen("Bangunan")
+              }
             },url)
 
             var latLng = e.latlng
@@ -119,7 +150,6 @@ function Peta({ queryNama,queryBangunan,setOpen,inputBasemap,opacityBasemap }) {
       setPosition([koordinat[1], koordinat[0]]);
       setSelectedGeojson(queryNama.feature)
     }
-
   }, [queryNama]);
 
   var SelectedLayerHandler = () =>{
@@ -130,6 +160,15 @@ function Peta({ queryNama,queryBangunan,setOpen,inputBasemap,opacityBasemap }) {
     setChangeBasemap(false);
     return <TileLayer ref={tileRef} url={inputBasemap} maxZoom={22} />;
   };
+
+  useEffect(() => {
+    if(map){
+      // map.target._layers[73].setOpacity(0.3)
+      console.log(map.target._layers._name)
+      // layerBangunanState.setOpacity(0.5)
+    //  layerBangunan.setOpacity(0.8)
+    }
+  }, [opacityBasemap])
 
   useEffect(() => {
     if(map){
@@ -151,7 +190,7 @@ function Peta({ queryNama,queryBangunan,setOpen,inputBasemap,opacityBasemap }) {
       {position && <Changedview center={position}/> }
       {selectedGeojson && <SelectedLayerHandler/> }
       {changeBasemap ? <TileLayerHandler /> : <TileLayer ref={tileRef} url={inputBasemap} maxZoom={22} />}
-      <CustomWMSLayer
+      {opacityBasemap && <CustomWMSLayer
         url="http://localhost:8080/geoserver/data/wms"
         layers={["data:bangunan", "data:batasdusun","data:landuse"]}
         options={{
@@ -162,7 +201,7 @@ function Peta({ queryNama,queryBangunan,setOpen,inputBasemap,opacityBasemap }) {
           identify: false,
           maxZoom: 22,
         }}
-      />
+      />}
       <GetFeatureInfoUrlHandle/>
     </MapContainer>
   );
