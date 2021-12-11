@@ -98,11 +98,12 @@ function Sidebar({ queryNama, bangunan, open }) {
         </MapContainer>
       </div>
       <div className="sidebar-info">
-        <h4>Bangunan</h4>
-        <div className="sidebar-pemilik">
+        <h5>Info Bangunan</h5>
+        {data.nama && <div className="sidebar-pemilik">
           <div className="sidebar-dropdown">Pemilik</div>
           <div style={{ margin: "10px" }}>Nama : {data.nama}</div>
-        </div>
+        </div>}
+        
         <div className="sidebar-bangunan">
           <div className="sidebar-dropdown">Bangunan</div>
           <div style={{ margin: "10px" }}>Luas :  {Math.round(data.luas)} m^2</div>

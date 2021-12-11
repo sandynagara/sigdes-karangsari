@@ -13,9 +13,13 @@
 }
 
 .sidebar-search{
-    padding: 10px 20px;
+    width: 300px;
     height: 100vh;
     background-color: white;
+    position: absolute;
+    top: 0;
+    padding: 20px;
+    z-index: 999;
     transition: 500ms;
 }
 

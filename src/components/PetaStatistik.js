@@ -22,7 +22,8 @@ function PetaStatistik() {
   var Panggil = (cb, url) => {
     fetch(url)
       .then((response) => response.json())
-      .then((json) => cb(json));
+      .then((json) => cb(json))
+      .catch(err=>console.log(err))
   };
 
   var eventHandle = (feature, layer) => {
@@ -217,10 +218,8 @@ function ItemStatistikPeta({ data, jenis, delay }) {
     <Fade right delay={delay}>
       <div className="data-logo">
         <img src={logo} />
-        {data ? (
+        {data && (
           <h6 style={{ fontSize: "30px", marginTop: "10px" }}> {data}</h6>
-        ) : (
-          ""
         )}
         <p>{jenis}</p>
       </div>
@@ -229,6 +228,9 @@ function ItemStatistikPeta({ data, jenis, delay }) {
 }
 
 function ListStatistikPeta({ data }) {
+
+  console.log(data)
+
   return (
     <div className="data-statistik-peta">
       <h5 style={{ textAlign: "left", color: "white" }}>
@@ -252,13 +254,18 @@ function ListStatistikPeta({ data }) {
         {data.fasum != null ? (
           data.fasum.map((e, index) => {
             var stat = e.jsonb_build_object;
-            return (
-              <ItemStatistikPeta
-                data={stat.jumlah}
-                delay={index * 200}
-                jenis={stat.kategori}
-              />
-            );
+            switch (stat.kategori) {
+              case "Peribadatan":
+                return  <ItemStatistikPeta data={stat.jumlah} delay={index * 200} jenis={stat.kategori}/>
+              case "Kesehatan":
+                return  <ItemStatistikPeta data={stat.jumlah} delay={index * 200} jenis={stat.kategori}/>
+              case "Pendidikan":
+                return  <ItemStatistikPeta data={stat.jumlah} delay={index * 200} jenis={stat.kategori}/>
+              case "Pemakaman":
+                return  <ItemStatistikPeta data={stat.jumlah} delay={index * 200} jenis={stat.kategori}/>
+              default:
+                break;
+            }
           })
         ) : (
           <ItemStatistikPeta data="0" jenis="Fasilitas Umum" />

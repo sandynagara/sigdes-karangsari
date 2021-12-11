@@ -1,0 +1,26 @@
+.profile-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+.profile-container img{
+    background-color: gray;
+    width: 80px;
+    height: 80px;
+    border-radius: 100%;
+}
+
+.profile-container p{
+    margin: 5px 0px;
+}
+
+.profile-container button{
+    margin-top: 5px;
+    background-color: rgb(199, 1, 1);
+}
+
+.profile-container button:hover{
+    background-color: rgb(255, 0, 0);
+}
