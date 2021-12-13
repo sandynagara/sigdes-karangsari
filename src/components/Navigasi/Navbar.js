@@ -6,7 +6,7 @@ const dataNav = ["Statistik"];
 
 function Navbar2() {
   const [scrollPosition, setScrollPosition] = useState(0);
-
+ 
   const handleScroll = () => {
     const position = window.pageYOffset;
     setScrollPosition(position);
