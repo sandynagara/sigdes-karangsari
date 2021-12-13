@@ -7,14 +7,15 @@
     z-index: 10000;
     transition: 500ms;
     top: 0;
+    text-align: left;
 }
 
 .layer-item{
     display: flex;
-    align-items: center;
-    justify-content: space-between;
+    flex-direction: column;
 }
 
 .layer-item p{
-    margin:0
+    margin:10px;
+    font-weight: bold;
 }

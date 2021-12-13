@@ -5,7 +5,12 @@ function ItemLayer({setOpacity,label}){
     const input = useRef()
 
     useEffect(() => {
-        input.current.value = 100
+        if(label==="Penggunaan Lahan"){
+            input.current.value = 40
+        }else{
+            input.current.value = 100
+        }
+        
     }, [])
 
     return(<div className='layer-item'>
@@ -15,12 +20,13 @@ function ItemLayer({setOpacity,label}){
     )
 }
 
-function Layer({open,setOpacityBasemap}) {
-
+function Layer({open,setOpacityBasemap,setOpacityBangunan,setOpacityLanduse}) {
+ 
     return (
         <div className='layer' style={ open === "Layer" ? {marginLeft:"55px"} :  {marginLeft:"-250px"}}>
             <ItemLayer label="Basemap" setOpacity={setOpacityBasemap}/>
-            <ItemLayer label="Penggunaan Lahan" setOpacity={setOpacityBasemap}/>
+            <ItemLayer label="Bangunan" setOpacity={setOpacityBangunan}/>
+            <ItemLayer label="Penggunaan Lahan" setOpacity={setOpacityLanduse}/>
         </div>
     )
 }

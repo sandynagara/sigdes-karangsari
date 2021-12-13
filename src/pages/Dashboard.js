@@ -10,12 +10,12 @@ import Layer from "../components/Layer";
 function Home() {
 
   const [Nama, setNama] = useState(false);
-  const [detail, setDetail] = useState(false);
   const [bangunan, setBangunan] = useState(false);
   const [basemap,setBasemap] = useState("https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}")
   const [opacityBasemap, setOpacityBasemap] = useState(100)
   const [opacityBangunan, setOpacityBangunan] = useState(100)
-  const [open, setOpen] = useState("");
+  const [opacityLanduse, setOpacityLanduse] = useState(50)
+  const [open, setOpen] = useState(false);
 
   var queryNama = useCallback(
     (e) => {
@@ -37,8 +37,10 @@ function Home() {
           setOpen={(e)=>{setOpen(e)}}
           inputBasemap={basemap}
           opacityBasemap={opacityBasemap}
+          opacityBangunan={opacityBangunan}
+          opacityLanduse={opacityLanduse}
         />
-        <Layer open={open} setOpacityBasemap={(e)=>setOpacityBasemap(e)}/>
+        <Layer open={open} setOpacityBasemap={(e)=>setOpacityBasemap(e)} setOpacityBangunan={(e)=>setOpacityBangunan(e)} setOpacityLanduse={(e)=>setOpacityLanduse(e)}/>
         <Basemap open={open} setInputBasemap={(e) => setBasemap(e)} inputBasemap={basemap} />
         <Login setOpen={(e)=>{setOpen(e)}}  open={open} />
       </div>
