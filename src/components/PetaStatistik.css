@@ -43,12 +43,18 @@
     background-color: rgb(0, 0, 0);    
 }
 
+.container-peta .judul{
+    color: white;
+    font-size: 40px;
+}
+
 .data-statistik-peta{
     text-align: left;
     padding: 20px 30px;
     border-radius: 20px;
     margin-bottom: 20px;
 }
+
 
 .data-logo{
     width: 110px;
@@ -61,6 +67,10 @@
     padding: 20px 10px;
     border-radius: 20px;
     transition: 500ms;
+}
+
+.data-statistik-peta .judul-fasum{
+    font-size: 20px;
 }
 
 .data-logo:hover{
@@ -98,3 +108,11 @@
     border-color: rgb(255, 251, 0);
     cursor: pointer;
 }
+
+@media only screen and (max-width: 600px) {
+    .container-peta .judul{
+        font-size: 28px;
+    }
+}
+
+ 

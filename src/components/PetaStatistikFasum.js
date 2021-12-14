@@ -7,7 +7,7 @@ function PetaStatistikFasum({daerah,setActive,kategori,tipeFilter}) {
 
     const [data, setData] = useState()
     const [selectedFasum, setSelectedFasum] = useState(false)
-    const [dataFilter, setDataFilter] = useState()
+    const [center, setCenter] = useState()
     const [first, setFirst] = useState(true)
 
     var Panggil = (cb,url) =>  {
@@ -21,16 +21,13 @@ function PetaStatistikFasum({daerah,setActive,kategori,tipeFilter}) {
         if(tipeFilter === "desa"){
             const url = "http://localhost:5000/api/desa/fasum/" + kategori
             Panggil((result)=>{
-                console.log(result,"hasil")
                 setData(result)
-                setDataFilter(result)
             },url)
         }else {
             const url = `http://localhost:5000/api/${tipeFilter}/fasum/${kategori}&${daerah}`
             Panggil((result)=>{
-                console.log(result,"hasil")
                 setData(result)
-                setDataFilter(result)
+                var koordinat = result.features[0].geometry.coordinates[0]
             },url)
         }
     }, [kategori])
@@ -56,7 +53,6 @@ function PetaStatistikFasum({daerah,setActive,kategori,tipeFilter}) {
 
     return (
         <div id='PetaStatistikFasum-container'>
-            
             <div className='statistik-fasum'>
                 <div className='peta'>
                     <MapContainer
@@ -85,17 +81,20 @@ function PetaStatistikFasum({daerah,setActive,kategori,tipeFilter}) {
                             </CircleMarker>
                             )
                         })}
-                        {selectedFasum && <Changedview center={[selectedFasum.geometry.coordinates[0][1],selectedFasum.geometry.coordinates[0][0]]}/>}
+                        {center && <Changedview center={center}/>}
                         {selectedFasum && <CircleMarker center={[selectedFasum.geometry.coordinates[0][1],selectedFasum.geometry.coordinates[0][0]]} pathOptions={{ color: 'yellow' }} radius={10} >
                             <Popup>{selectedFasum.properties.nama}</Popup>
                         </CircleMarker> }
                     </MapContainer>
                 </div>
                 <div className='daftar-fasum'>
-                   
-                    {dataFilter && dataFilter.features && dataFilter.features.map((e)=>{
+                    {data && data.features && data.features.map((e)=>{
                         return(
-                        <div className='item-fasum' onClick={()=>setSelectedFasum(e)}>
+                        <div className='item-fasum' onClick={()=>{
+                            setSelectedFasum(e)
+                            console.log(e.geometry.coordinates[0][1],e.geometry.coordinates[0][0],"e")
+                            setCenter([e.geometry.coordinates[0][1],e.geometry.coordinates[0][0]])
+                            }}>
                             <p>{e.properties.nama}</p>
                         </div>
                         )
@@ -106,5 +105,5 @@ function PetaStatistikFasum({daerah,setActive,kategori,tipeFilter}) {
         </div>
     )
 }
-
+ 
 export default PetaStatistikFasum

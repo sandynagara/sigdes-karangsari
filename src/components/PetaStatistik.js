@@ -3,6 +3,7 @@ import { MapContainer, GeoJSON } from "react-leaflet";
 import Fade from "react-reveal/Fade";
 import "./PetaStatistik.css";
 import PetaStatistikFasum from "./PetaStatistikFasum";
+import InputDusunRt from "./InputDusunRt";
 import {AiOutlineBorderInner,AiOutlineBorderHorizontal} from 'react-icons/ai'
 import logoKesehatan from "../icon/kesehatan.png";
 import logoPemakaman from "../icon/pemakaman.png";
@@ -94,7 +95,7 @@ function ListStatistikPeta({ dataStatitik,setActive,active,tipeFilter }) {
 
   return (
     <div className="data-statistik-peta">
-      <h5 style={{ textAlign: "left", color: "white", marginTop: "20px" }}>
+      <h5 className="judul-fasum" style={{ textAlign: "left", color: "white"}}>
         <b>Fasilitas Umum</b>
       </h5>
       <div className="list-item-statistik">
@@ -149,18 +150,16 @@ function TipeStatistik({ tipe, tipeFillter }) {
   );
 }
 
-
 function PetaStatistik() {
   const [dataGeojson, setDataGeojson] = useState(false);
   const [dataStatitik, setDataStatitik] = useState();
   const [tipeFilter, setTipeFilter] = useState("desa");
   const [scrollPosition, setScrollPosition] = useState(true);
   const [active, setActive] = useState(false);
+  const [dataInput, setDataInput] = useState(false)
 
   const handleScroll = () => {
       const position = document.documentElement.clientWidth;
-      console.log(position,"posisi")
-      console.log(scrollPosition)
       if(position<790){
         setScrollPosition(false);
       }else{
@@ -168,6 +167,44 @@ function PetaStatistik() {
       }
   };
 
+  useEffect(() => {
+    const position = document.documentElement.clientWidth;
+    if(position<790){
+      setScrollPosition(false);
+    }else{
+      setScrollPosition(true);
+    }
+  }, [])
+
+  useEffect(() => {
+    var urlDesa = "http://localhost:5000/api/" + tipeFilter;
+    Panggil((result) => {
+      setDataGeojson(result);
+    }, urlDesa);
+
+    if (tipeFilter == "desa") {
+      var urlData = "http://localhost:5000/api/desa/data";
+      Panggil((result) => {
+        var json = {
+          data: result[0],
+        };
+        setDataStatitik(json);
+      }, urlData);
+    }
+  }, [tipeFilter]);
+
+  useEffect(() => {
+    if(dataInput){
+      var url ="http://localhost:5000/api/" +tipeFilter +"/"+dataInput;
+          Panggil((result) => {
+            var json = {
+              daerah: dataInput,
+              data: result[0],
+            };
+            setDataStatitik(json);
+          }, url);
+    }
+  }, [dataInput])
 
   window.addEventListener('resize', handleScroll, { passive: true });
 
@@ -219,12 +256,13 @@ function PetaStatistik() {
               data: result[0],
               feature: feature,
             };
-            console.log(json,"dusun");
             setDataStatitik(json);
           }, url);
         },
       });
   };
+
+
 
   const style = {
     weight: 2,
@@ -236,22 +274,7 @@ function PetaStatistik() {
     console.log(document.documentElement.clientWidth)
   }, true);
 
-  useEffect(() => {
-    var urlDesa = "http://localhost:5000/api/" + tipeFilter;
-    Panggil((result) => {
-      setDataGeojson(result);
-    }, urlDesa);
 
-    if (tipeFilter == "desa") {
-      var urlData = "http://localhost:5000/api/desa/data";
-      Panggil((result) => {
-        var json = {
-          data: result[0],
-        };
-        setDataStatitik(json);
-      }, urlData);
-    }
-  }, [tipeFilter]);
 
   var SelectedLayer = () => {
     return (
@@ -279,7 +302,7 @@ function PetaStatistik() {
     <div id="Statistik">
       <div className="container-peta">
         <p style={{ color: "white", fontSize: "20px" }}>_____</p>
-        <h5 style={{ color: "white", fontSize: "40px" }}>
+        <h5 className="judul">
           Statistik Desa Karangsari
         </h5>
         <TipeStatistik tipe={tipe} tipeFillter={tipeFilter} />
@@ -304,7 +327,7 @@ function PetaStatistik() {
           </MapContainer>}
          
           <div className="data-peta-statistik">
-            {!scrollPosition && tipeFilter !== "desa" && <input/>}
+            {!scrollPosition && tipeFilter !== "desa" && <InputDusunRt tipeFilter={tipeFilter} setDataInput={(e)=>setDataInput(e)}/>}
             {dataStatitik && <ListStatistikPeta tipeFilter = {tipeFilter} dataStatitik={dataStatitik} setActive = {setActive} active={active}/>}
           </div>
         </div>

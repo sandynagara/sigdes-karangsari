@@ -6,14 +6,14 @@ function Backgroud() {
   return (
     <div className="background" id="background">
       <div className="judul">
-        <h1 style={{fontSize:60}}>SIGDES KARANGSARI</h1>
+        <h1 >SIGDES KARANGSARI</h1>
         <h6 style={{fontSize:20 ,fontWeight:"100",fontStyle:'italic'}}>Sistem Informasi Desa Karangsari</h6>
         <div style={{marginTop:"10px"}}>
         {/* <button className="about"><h6><b>ABOUT</b></h6></button> */}
         <Link to={"/dashboard"}>
           <button className="masuk" type="button"><h6><b>MASUK SIGDES</b></h6></button>
         </Link>
-
+ 
         </div>
        
       </div>

@@ -62,8 +62,17 @@
     transition: 500ms;
 }
 
+.background .judul h1{
+    font-size: 60px
+}
 
-
-.judul h6{
+.background .judul h6{
     margin-top: 5px;
+}
+
+@media only screen and (max-width: 600px) {
+    .background .judul h1 {
+      font-size: 40px;
+    }
+
 }
