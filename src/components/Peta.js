@@ -106,16 +106,16 @@ function Peta({ queryNama,queryBangunan,setOpen,inputBasemap,opacityBasemap,opac
               if(result==="unauthorized"){
                 var url =  "http://localhost:5000/api/bangunanUmum/"+numb
                 panggil((result)=>{
+                  if(result.penggunaan === null) result.penggunaan = "Tidak Diketahui"
                   queryBangunan(result)
                   setSelectedGeojson(result.feature)
                   setOpen("Bangunan")
                 },url
                 )
               }else{
-                
-                if(result.nama === null){
-                  result.nama = "Tidak Diketahui"
-                }
+                result.id_bangunan = numb
+                if(result.nama === null) result.nama = "Tidak Diketahui"
+                if(result.penggunaan === null) result.penggunaan = "Tidak Diketahui"
                 queryBangunan(result)
                 setSelectedGeojson(result.feature)
                 setOpen("Bangunan")

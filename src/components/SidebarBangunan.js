@@ -102,6 +102,7 @@ function Sidebar({ queryNama, bangunan, open,setOpen }) {
           
           <div className="sidebar-bangunan">
             <div className="sidebar-dropdown">Bangunan</div>
+            <div style={{ margin: "10px" }}>Penggunaan : {data.penggunaan}</div>
             <div style={{ margin: "10px" }}>Luas :  {Math.round(data.luas)} m^2</div>
             <div style={{ margin: "10px" }}>Rt : {data.rt}</div>
             <div style={{ margin: "10px" }}>Dusun : {data.nama_dusun}</div>

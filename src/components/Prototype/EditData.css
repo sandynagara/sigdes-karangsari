@@ -10,10 +10,64 @@
 }
 
 .edit-Data-container{
+    
     padding: 20px;
-    width: 400px;
+    width: 600px;
     border-radius: 10px;
     background-color: white;
+}
+
+.edit-Data-container input{
+    padding: 5px;
+    border-top: 0px;
+    border-left: 0px;
+    border-right: 0px;
+    border-bottom: 1px solid lightgrey;
+}
+
+.edit-Data-container input:focus{
+    outline-width: 0;
+
+    border-color: rgb(25, 103, 204);
+}
+
+.edit-Data-container .input{
+    margin-top: 10px;
+}
+
+.edit-Data-container p{
+    margin: 0px;
+    font-weight:600;
+    font-size: 15px;
+}
+
+.edit-Data-container .button-position{
+    margin-top: 20px;
+    width: 100%;
+    display: flex;
+    justify-content: end;
+}
+
+.edit-Data-container button{
+    padding: 8px 20px;
+    border-width: 0px;
+    background-color: white;
+    color: rgb(25, 103, 204);;
+    border-radius: 4px;
+}
+
+.edit-Data-container button:hover{
+    color: rgb(25, 92, 179);;
+}
+
+.edit-Data-container #submit{
+    margin-left: 10px;
+    background-color: rgb(26,115,232);
+    color: white;
+}
+
+.edit-Data-container #submit:hover{
+    background-color:rgb(25, 103, 204);
 }
 
 .edit-Data-container .peta{
