@@ -28,7 +28,7 @@ function Home() {
       <div>
         <NavPeta open={open} setOpen={(e)=>{setOpen(e)}}/>
         <Search queryNama={queryNama} open={open} setOpen={(e)=>{setOpen(e)}}/>
-        <SidebarBangunan queryNama={Nama} bangunan={bangunan} open={open} />
+        <SidebarBangunan queryNama={Nama} bangunan={bangunan} open={open} setOpen={(e)=>{setOpen(e)}}/>
         <Peta
           queryNama={Nama}
           queryBangunan={(e) => {

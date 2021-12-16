@@ -1,4 +1,5 @@
 import "./App.css";
+import "leaflet-draw/dist/leaflet.draw.css";
 import Dashboard from "./pages/Dashboard";
 import Home from "./pages/Home";
 import { BrowserRouter , Routes , Route } from "react-router-dom";

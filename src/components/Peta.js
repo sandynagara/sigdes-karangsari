@@ -33,7 +33,7 @@ function Peta({ queryNama,queryBangunan,setOpen,inputBasemap,opacityBasemap,opac
       })
       .then((respond) => respond.json())
       .then((json) => cb(json))
-      .catch((err)=>console.log(err));
+      .catch((err)=>console.log(err,"err"));
   };
 
   var Changedview = center => {
@@ -94,11 +94,12 @@ function Peta({ queryNama,queryBangunan,setOpen,inputBasemap,opacityBasemap,opac
         var url = getFeatureInfoUrl(
           "http://localhost:8080/geoserver/data/wms?",map,e
         );
+          
         panggil((result) => {
-          console.log(result);
-          if (result.crs != null) {
-            var numb = result.features[0].id.match(/\d/g);
-            numb = numb.join("");
+          console.log(result,"url")
+          var numb = result.features[0].id.match(/\d/g);
+          numb = numb.join("");
+          console.log(numb,"numb")
             var url =  "http://localhost:5000/api/bangunanAdmin/"+numb
             panggil((result)=>{
               console.log(result)
@@ -111,6 +112,10 @@ function Peta({ queryNama,queryBangunan,setOpen,inputBasemap,opacityBasemap,opac
                 },url
                 )
               }else{
+                
+                if(result.nama === null){
+                  result.nama = "Tidak Diketahui"
+                }
                 queryBangunan(result)
                 setSelectedGeojson(result.feature)
                 setOpen("Bangunan")
@@ -119,7 +124,7 @@ function Peta({ queryNama,queryBangunan,setOpen,inputBasemap,opacityBasemap,opac
 
             var latLng = e.latlng
             map.setView(latLng);
-          }
+
         }, url);
       },
     });

@@ -2,8 +2,8 @@ import React from 'react'
 import NavbarHome from '../components/Navigasi/Navbar'
 import Backgroud from '../components/Backgroud'
 import PetaStatistik from '../components/PetaStatistik'
-import * as Scroll from 'react-scroll'
 import './Home.css'
+import Footer from '../components/Footer'
 
 function Home() {
     return (
@@ -11,6 +11,7 @@ function Home() {
             <NavbarHome/>
             <Backgroud />
             <PetaStatistik />
+            <Footer/>
         </div>
     )
 }

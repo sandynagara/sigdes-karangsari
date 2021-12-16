@@ -1,0 +1,26 @@
+.edit-Data-backgroud{
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+    left: 0;
+    top: 0;
+}
+
+.edit-Data-container{
+    padding: 20px;
+    width: 400px;
+    border-radius: 10px;
+    background-color: white;
+}
+
+.edit-Data-container .peta{
+    margin-top: 20px;
+}
+
+.edit-Data-container input{
+    width: 100%;
+}
+

@@ -8,12 +8,11 @@ const dataNav = ["Statistik"];
 function DropdownMenu({setScrollPosition}){
 
   const [active, setActive] = useState(false)
-
+  console.log(active)
+ 
   return(
     <div>
-      <div className="dropdown-menu-item" onClick={()=>{
-          setActive(!active)
-          setScrollPosition(false)}}>
+      <div className="dropdown-menu-item" onClick={()=>{setActive(!active); setScrollPosition(false)}}>
         {active ?  
           <AiOutlineClose style={{color:"white",width:"25px",height:"25px"}}/> :
           <AiOutlineMenu style={{color:"white",width:"25px",height:"25px"}}/>
@@ -40,8 +39,9 @@ function DropdownMenu({setScrollPosition}){
 }
 
 function Navbar2() {
-  const [scrollPosition, setScrollPosition] = useState(false);
-  const [resize, setResize] = useState(false);
+  const [scrollPosition, setScrollPosition] = useState(true);
+  const [resize, setResize] = useState(true);
+  console.log(resize,"resize")
  
   const handleScroll = () => {
     const positionY = window.pageYOffset;
