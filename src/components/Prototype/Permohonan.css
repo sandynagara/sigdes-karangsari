@@ -1,0 +1,50 @@
+.permohonan-container{
+    width: 650px;
+    height: 500px;
+    background-color: white;
+    border-radius: 10px;
+    padding: 20px;
+    overflow: scroll;
+}
+
+.permohonan-container::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+.permohonan-container::-webkit-scrollbar-track {
+  background: #f1f1f1; 
+}
+ 
+/* Handle */
+.permohonan-container::-webkit-scrollbar-thumb {
+  background: #888; 
+}
+
+/* Handle on hover */
+.permohonan-container::-webkit-scrollbar-thumb:hover {
+  background: #555; 
+}
+
+#list-permohonan {
+    width: 100%;
+    font-size: 13px;
+}
+
+#list-permohonan td,#list-permohonan th{
+    border: 1px solid #ddd;
+    
+    padding: 8px;
+}
+
+#list-permohonan tr:nth-child(even){background-color: #f2f2f2;font-weight: 300;}
+
+#list-permohonan tr:hover {background-color: #ddd;}
+
+#list-permohonan th{
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #04AA6D;
+    color: black ;
+}

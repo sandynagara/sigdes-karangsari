@@ -83,25 +83,17 @@
         })
       }
 
-     useEffect(() => {
-       
-     }, [mapLayer])
-
       var onCreate = () =>{
-
       }
 
       var onDeleted = () =>{
-
       }
 
       var submitHandle =(e)=>{
         e.preventDefault()
-        console.log(mapLayer)
         const pemilik = e.target.pemilik.value
         const penggunaan = e.target.penggunaan.value
         const url = "http://localhost:5000/api/permohonan"
-        console.log(mapLayer)
         fetch(url,{method:"POST", headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json'
@@ -134,7 +126,6 @@
                         style={{ width: "100%", height: "300px" }}
                         zoomControl={false}
                     >
-                        {/* {data && <GeojsonHandler />} */}
                         <Changedview center={position} />
                         <CustomWMSLayer
                             url="http://localhost:8080/geoserver/data/wms?"

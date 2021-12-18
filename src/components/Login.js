@@ -1,8 +1,11 @@
 import React,{useEffect,useState} from 'react'
 import './Login.css'
 import Profile from './Profile'
+import Permohonan from './Prototype/Permohonan'
 
 function LoginPage({setLogin}){
+
+  
 
     var submitHandler = (e) => {
         e.preventDefault()
@@ -41,6 +44,7 @@ function LoginPage({setLogin}){
 function Login({open}) {
 
     const [login, setLogin] = useState(false)
+    const [activePermohonan, setActivePermohonan] = useState(false)
 
     var Panggil = (cb,url) => {
         fetch(url, {
@@ -66,7 +70,9 @@ function Login({open}) {
 
     return (
         <div className="login-container" style={open == "Admin" ? { marginLeft: "55px" } : { marginLeft: "-350px" }}>
-            {login ?  <Profile setLogin={setLogin}/> :  <LoginPage setLogin={setLogin}/>}
+            {login ?  <Profile setLogin={setLogin} setActivePermohonan={setActivePermohonan}/> :  <LoginPage setLogin={setLogin}/>}
+            {activePermohonan &&   <Permohonan setActivePermohonan={setActivePermohonan}/>}
+         
         </div>
     )
 }
