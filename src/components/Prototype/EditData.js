@@ -74,6 +74,7 @@
             var posisi = [e.lng,e.lat]
             koordinat.push(posisi)
           })
+          koordinat.push([e.layers._layers[k]._latlngs[0][0].lng,e.layers._layers[k]._latlngs[0][0].lat])
           var geojson = {
             type:"MultiPolygon",
             coordinates:[[koordinat]]

@@ -1,5 +1,5 @@
 .permohonan-container{
-    width: 650px;
+    width: 700px;
     height: 500px;
     background-color: white;
     border-radius: 10px;
@@ -32,19 +32,58 @@
 }
 
 #list-permohonan td,#list-permohonan th{
-    border: 1px solid #ddd;
+    border: 1px solid #dddddd;
     
     padding: 8px;
 }
 
-#list-permohonan tr:nth-child(even){background-color: #f2f2f2;font-weight: 300;}
-
 #list-permohonan tr:hover {background-color: #ddd;}
 
 #list-permohonan th{
+    font-weight: 500;
     padding-top: 12px;
     padding-bottom: 12px;
     text-align: left;
-    background-color: #04AA6D;
-    color: black ;
+    background-color: rgb(0,117,255);
+    color: white ;
+}
+
+#list-permohonan .geometry{
+    cursor: pointer;
+    text-align: center;
+}
+
+#list-permohonan .geometry:hover{
+    color: rgb(0,117,255);
+}
+
+.header-peta-permohonan p{
+    margin: 0px 10px;
+}
+
+.header-peta-permohonan{
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+ 
+}
+
+button.decline{
+    border-radius: 5px 0px 0px 5px;
+ 
+    background-color: rgb(224, 0, 0);
+}
+
+button.decline:hover{
+    background-color: rgb(161, 0, 0);
+}
+
+button.accept{
+    padding: 0px;
+    border-radius: 0px 5px 5px 0px;
+    background-color: rgb(0, 108, 231);
+}
+
+button.accept:hover{
+    background-color: rgb(3, 83, 175);
 }
