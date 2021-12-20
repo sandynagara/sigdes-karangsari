@@ -110,10 +110,9 @@ function Sidebar({ queryNama, bangunan, open,setOpen }) {
         
           
           <div className="sidebar-posisi"></div>
-          <div className="edit-bangunan" onClick={()=>{setActiveEdit(true);setOpen(false)}}>
+          {data.nama && <div className="edit-bangunan" onClick={()=>{setActiveEdit(true);setOpen(false)}}>
               Edit Bangunan
-          </div>
-
+          </div>}
           {activeEdit && <EditData setActiveEdit={setActiveEdit} data={data}/>}
         </div> 
        
