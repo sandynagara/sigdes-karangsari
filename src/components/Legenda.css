@@ -1,0 +1,10 @@
+.sidebar-container{
+    width: 250px;
+    height: 100vh;
+    background-color: white;
+    z-index: 9999;
+    position: absolute;
+    top: 0;
+    padding: 10px;
+    transition: 500ms;
+}

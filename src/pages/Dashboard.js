@@ -6,6 +6,7 @@ import SidebarBangunan from "../components/SidebarBangunan";
 import Login from "../components/Login";
 import Basemap from "../components/Basemap"
 import Layer from "../components/Layer";
+import Legenda from "../components/Legenda";
 
 function Home() {
 
@@ -40,6 +41,7 @@ function Home() {
           opacityBangunan={opacityBangunan}
           opacityLanduse={opacityLanduse}
         />
+        <Legenda open={open}/>
         <Layer open={open} setOpacityBasemap={(e)=>setOpacityBasemap(e)} setOpacityBangunan={(e)=>setOpacityBangunan(e)} setOpacityLanduse={(e)=>setOpacityLanduse(e)}/>
         <Basemap open={open} setInputBasemap={(e) => setBasemap(e)} inputBasemap={basemap} />
         <Login setOpen={(e)=>{setOpen(e)}}  open={open} />

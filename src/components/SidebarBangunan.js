@@ -64,8 +64,7 @@ function Sidebar({ queryNama, bangunan, open,setOpen }) {
       className="Sidebar-containter"
       style={
         open === "Bangunan" ? { marginLeft: "55px" } : { marginLeft: "-350px" }
-      }
-    >
+      }>
       {queryNama || bangunan ? <div>
         <div className="Sidebar-gambar">
           <MapContainer
@@ -115,7 +114,6 @@ function Sidebar({ queryNama, bangunan, open,setOpen }) {
           </div>}
           {activeEdit && <EditData setActiveEdit={setActiveEdit} data={data}/>}
         </div> 
-       
       </div> : 
       <div style={{height:"100%",display:"flex",alignItems:"center",justifyContent:"center"}}>No one feature selected</div> }
     </div>
