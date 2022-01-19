@@ -1,7 +1,7 @@
 .layer{
     position: absolute;
     padding: 10px;
-    width: 300px;
+    width: 250px;
     height: 100vh;
     background-color: white;
     z-index: 10000;
@@ -16,6 +16,5 @@
 }
 
 .layer-item p{
-    margin:10px;
-    font-weight: bold;
+    margin:10px 0px;
 }

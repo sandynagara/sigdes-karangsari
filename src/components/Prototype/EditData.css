@@ -33,6 +33,7 @@
 
 .edit-Data-container .input{
     margin-top: 10px;
+    z-index: -1;
 }
 
 .edit-Data-container p{
@@ -78,3 +79,22 @@
     width: 100%;
 }
 
+.list-penduduk{
+    background-color: white;
+    width: 100%;
+    position: absolute;
+    border: 1px rgb(138, 138, 138);
+    border-top: 0px;
+    z-index: 999;
+}
+
+.list-penduduk .pilihan{
+    cursor: pointer;
+    padding: 8px 5px;
+
+    background-color: white
+}
+
+.list-penduduk .pilihan:hover{
+    background-color: rgb(207, 207, 207);
+}

@@ -1,26 +1,32 @@
 import React,{useRef} from 'react'
 import './Legenda.css'
 
-const daftarLegendaLanduse = 
-[{nama:"Arena Olahraga",warna:"red"}
-,{nama:"Fasilitas Kesehatan",warna:"red"}
-,{nama:"Industri",warna:"red"}
-,{nama:"Ladang",warna:"red"}
-,{nama:"Makam",warna:"red"}
-,{nama:"Pemukiman",warna:"red"}
-,{nama:"Pemerintahan",warna:"red"}
-,{nama:"Pemukiman",warna:"red"}
-,{nama:"Pendidikan",warna:"red"}
-,{nama:"Peternakan",warna:"red"}
-,{nama:"Sarana Ibadah",warna:"red"}
-,{nama:"Sawah",warna:"red"}
-,{nama:"Tanaman Campur",warna:"red"}]
+const daftarLegendaLine = [
+    {nama:"Batas RT", warna:"orange"},
+    {nama:"Batas Dusun", warna:"yellow"}
+]
+
+const daftarLegendaArea = 
+[{nama:"Arena Olahraga",warna:"#EDCC7D"}
+,{nama:"Bangunan",warna:"#BD00FF"}
+,{nama:"Fasilitas Kesehatan",warna:"#E8B5BF"}
+,{nama:"Industri",warna:"#FFB085"}
+,{nama:"Irigasi",warna:"#ABE6F2"}
+,{nama:"Ladang",warna:"#FFFF99"}
+,{nama:"Jalan",warna:"#FF8766"}
+,{nama:"Pemakaman",warna:"#8F8F8F"}
+,{nama:"Pemerintahan",warna:"#C7997A"}
+,{nama:"Pemukiman",warna:"#D1D1D1"}
+,{nama:"Pendidikan",warna:"#DECCA1"}
+,{nama:"Peternakan",warna:"#C7B000"}
+,{nama:"Sarana Ibadah",warna:"#A6A1BA"}
+,{nama:"Sawah",warna:"green"}
+,{nama:"Sungai",warna:"#CCFFFF"}
+,{nama:"Tanaman Campur",warna:"#8AED96"}]
 
 function Legenda({open}) {
 
     const imageLegend = useRef()
-
-    
 
     return (
         <div className='sidebar-container'
@@ -28,10 +34,19 @@ function Legenda({open}) {
             open === "Legenda" ? { marginLeft: "55px" } : { marginLeft: "-350px" }
         }>
             <div>
-                <p>Judul</p>
+                <p><b>Legenda</b></p>
             </div>
             <div>
-                {daftarLegendaLanduse.map((e)=>{
+                {daftarLegendaLine.map(e=>{
+                    return <div style={{display:"flex",alignItems:"center",margin:"10px 0px"}}>
+                        <div style={{backgroundColor:`${e.warna}`,width:"35px",display:"flex",alignItems:"center",height:"5px"}}>
+                            <div style={{height:"1px",width:"10px",backgroundColor:"black",marginLeft:"5px"}}/>
+                            <div style={{height:"1px",width:"10px",backgroundColor:"black",marginLeft:"5px"}}/>
+                        </div>
+                        <p style={{margin:"0px 10px"}}>{e.nama}</p>
+                    </div>
+                })}
+                {daftarLegendaArea.map((e)=>{
                     return <div style={{display:"flex",alignItems:"center",margin:"10px 0px"}}>
                         <div style={{backgroundColor:`${e.warna}`,width:"20px",height:"20px"}}></div>
                         <p style={{margin:"0px 10px"}}>{e.nama}</p>

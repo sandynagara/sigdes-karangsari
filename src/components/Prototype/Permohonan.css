@@ -67,10 +67,10 @@
     margin-bottom: 10px;
  
 }
-
 button.decline{
-    border-radius: 5px 0px 0px 5px;
- 
+    width: 30px;
+    padding: 2px;
+    border-radius: 0px;
     background-color: rgb(224, 0, 0);
 }
 
@@ -79,11 +79,16 @@ button.decline:hover{
 }
 
 button.accept{
+    width: 30px;
     padding: 0px;
-    border-radius: 0px 5px 5px 0px;
+    border-radius: 0px;
     background-color: rgb(0, 108, 231);
 }
 
 button.accept:hover{
     background-color: rgb(3, 83, 175);
+}
+
+.edit-Data-backgroud .loading{
+    position: absolute;
 }

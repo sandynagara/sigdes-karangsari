@@ -12,7 +12,7 @@
 }
 
 .peta-statistik-fasum{
-    width: 300px;
+    width: 500px;
     height: 100%;
     z-index: 100000;
 }
@@ -29,8 +29,8 @@
 
 .statistik-fasum{
     background-color: white;
-    width: 500px;
-    height: 400px;
+    width: 700px;
+    height: 500px;
     margin: auto auto;
     border-radius: 15px;
     display: flex;
@@ -55,7 +55,7 @@
     cursor: pointer;
     margin: 5px 10px;
     border-radius: 5px;
-    background-color: rgb(218, 218, 218);
+    background-color: rgb(255, 255, 255);
 }
 
 .daftar-fasum .item-fasum:hover{
@@ -105,10 +105,4 @@
         max-height: 120px;
     }
 
-    .daftar-fasum .item-fasum{
-        cursor: pointer;
-        margin: 5px 5px;
-        border-radius: 5px;
-        background-color: rgb(218, 218, 218);
-    }
 }

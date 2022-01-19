@@ -16,11 +16,25 @@
     margin: 5px 0px;
 }
 
-.profile-container button{
+.profile-container button.sign-out{
     margin-top: 5px;
-    background-color: rgb(199, 1, 1);
+    padding: 10px;
+    width: 40px;
+    margin-left: 5px;
+    border-radius: 10px 10px 10px 10px;
+    background-color: rgb(255, 0, 0);
+}
+
+.profile-container button.sign-out:hover{
+    background-color: rgb(182, 0, 0);
+}
+
+.profile-container button.permohonan{
+    margin-top: 5px;
+    padding: 10px 20px;
+    background-color: rgb(38, 0, 255);
 }
 
 .profile-container button:hover{
-    background-color: rgb(255, 0, 0);
+    background-color: rgb(34, 1, 221);
 }

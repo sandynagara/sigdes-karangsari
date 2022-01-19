@@ -4,7 +4,7 @@ import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import * as WMS from "leaflet.wms";
 
-function Peta({ queryNama,queryBangunan,setOpen,inputBasemap,opacityBasemap,opacityBangunan,opacityLanduse }) {
+function Peta({setWait, queryNama,queryBangunan,setOpen,inputBasemap,opacityBasemap,opacityBangunan,opacityIrigasi,opacityLanduse,opacityJalan,opacitySungai,opacityBatasRt,opacityBatasDusun }) {
   const [position, setPosition] = useState(false);
   const [changeBasemap, setChangeBasemap] = useState(true);
   const [selectedGeojson, setSelectedGeojson] = useState(false);
@@ -12,7 +12,7 @@ function Peta({ queryNama,queryBangunan,setOpen,inputBasemap,opacityBasemap,opac
   const [map, setMap] = useState(false)
 
   const tileRef = useRef();
-
+ 
   useEffect(() => {
     setChangeBasemap(true);
   }, [inputBasemap]);
@@ -33,7 +33,9 @@ function Peta({ queryNama,queryBangunan,setOpen,inputBasemap,opacityBasemap,opac
       })
       .then((respond) => respond.json())
       .then((json) => cb(json))
-      .catch((err)=>console.log(err,"err"));
+      .catch((err)=>{
+        console.log(err,"err")
+      });
   };
 
   var Changedview = center => {
@@ -71,16 +73,10 @@ function Peta({ queryNama,queryBangunan,setOpen,inputBasemap,opacityBasemap,opac
 
       if(first){
         const { url, options, layers } = props;
-
-        // Add WMS source/layers
         const source = WMS.source(url, options);
-
         var layer= source.getLayer(layers)
-
         layer.addTo(map);
-
-        setFirst(false)
-
+        setFirst(false);
       }
     return null;
   }
@@ -90,22 +86,21 @@ function Peta({ queryNama,queryBangunan,setOpen,inputBasemap,opacityBasemap,opac
     var map = useMap();
     map = useMapEvents({
       click(e) {
-        console.log(e.latlng, map);
+        setWait(true)
         var url = getFeatureInfoUrl(
           "http://localhost:8080/geoserver/data/wms?",map,e
         );
           
         panggil((result) => {
-          console.log(result,"url")
           var numb = result.features[0].id.match(/\d/g);
           numb = numb.join("");
-          console.log(numb,"numb")
             var url =  "http://localhost:5000/api/bangunanAdmin/"+numb
             panggil((result)=>{
-              console.log(result)
+              console.log(result,"2")
               if(result==="unauthorized"){
                 var url =  "http://localhost:5000/api/bangunanUmum/"+numb
                 panggil((result)=>{
+                  setWait(false)
                   if(result.penggunaan === null) result.penggunaan = "Tidak Diketahui"
                   queryBangunan(result)
                   setSelectedGeojson(result.feature)
@@ -113,6 +108,8 @@ function Peta({ queryNama,queryBangunan,setOpen,inputBasemap,opacityBasemap,opac
                 },url
                 )
               }else{
+                console.log(result,"2")
+                setWait(false)
                 result.id_bangunan = numb
                 if(result.nama === null) result.nama = "Tidak Diketahui"
                 if(result.penggunaan === null) result.penggunaan = "Tidak Diketahui"
@@ -131,8 +128,6 @@ function Peta({ queryNama,queryBangunan,setOpen,inputBasemap,opacityBasemap,opac
     return null
   }
 
-
-
   var SelectedLayerHandler = () =>{
     return <GeoJSON data={selectedGeojson} style={{color:"yellow"}} />
   }
@@ -146,23 +141,26 @@ function Peta({ queryNama,queryBangunan,setOpen,inputBasemap,opacityBasemap,opac
     if(map){
       console.log(map)
       map.target.eachLayer(function(layer) {
-        if(layer._name==="data:bangunan"){
-          layer.setOpacity(opacityBangunan*0.01)
-        }
-      });
-    }
-  }, [opacityBangunan])
-
-  useEffect(() => {
-    if(map){
-      console.log(map)
-      map.target.eachLayer(function(layer) {
-        if(layer._name==="data:landuse"){
+        if(layer._name==="data:jalan"){
+          layer.setOpacity(opacityJalan*0.01)
+        }else if(layer._name==="data:batasrt"){
+          layer.setOpacity(opacityBatasRt*0.01)
+        }else if(layer._name==="data:landuse"){
           layer.setOpacity(opacityLanduse*0.01)
+        }else if(layer._name==="data:bangunan"){
+          layer.setOpacity(opacityBangunan*0.01)
+        }else if(layer._name==="data:sungai"){
+          layer.setOpacity(opacitySungai*0.01)
+        }else if(layer._name==="data:batasdusun"){
+          layer.setOpacity(opacityBatasDusun*0.01)
+        }else if(layer._name==="data:irigasi"){
+          layer.setOpacity(opacityIrigasi*0.01)
+        }else if(layer._name==="data:bismillah"){
+          layer.setOpacity(opacityBasemap*0.01)
         }
       });
     }
-  }, [opacityLanduse])
+  }, [opacityJalan,opacityBatasRt,opacityBasemap,opacityLanduse,opacityIrigasi,opacityBangunan,opacitySungai,opacityBatasDusun])
 
   useEffect(() => {
     if(map){
@@ -184,18 +182,7 @@ function Peta({ queryNama,queryBangunan,setOpen,inputBasemap,opacityBasemap,opac
       {position && <Changedview center={position}/> }
       {selectedGeojson && <SelectedLayerHandler/> }
       {changeBasemap ? <TileLayerHandler /> : <TileLayer ref={tileRef} url={inputBasemap} maxZoom={22} />}
-      <CustomWMSLayer
-        url="http://localhost:8080/geoserver/data/wms"
-        layers={"data:batasdusun"}
-        options={{
-          format: "image/png",
-          transparent: "true",
-          tiled: "true",
-          info_format: "application/json",
-          identify: false,
-          maxZoom: 22,
-        }}
-      />
+
       <CustomWMSLayer
         url="http://localhost:8080/geoserver/data/wms"
         layers={"data:landuse"}
@@ -221,8 +208,66 @@ function Peta({ queryNama,queryBangunan,setOpen,inputBasemap,opacityBasemap,opac
           maxZoom: 22,
         }}
       />
-      
-      
+      <CustomWMSLayer
+        url="http://localhost:8080/geoserver/data/wms"
+        layers={"data:batasrt"}
+        options={{
+          format: "image/png",
+          transparent: "true",
+          tiled: "true",
+          info_format: "application/json",
+          identify: false,
+          maxZoom: 22,
+        }}
+      />
+      <CustomWMSLayer
+        url="http://localhost:8080/geoserver/data/wms"
+        layers={"data:batasdusun"}
+        options={{
+          format: "image/png",
+          transparent: "true",
+          tiled: "true",
+          info_format: "application/json",
+          identify: false,
+          maxZoom: 22,
+        }}
+      />
+      <CustomWMSLayer
+        url="http://localhost:8080/geoserver/data/wms"
+        layers={"data:sungai"}
+        options={{
+          format: "image/png",
+          transparent: "true",
+          tiled: "true",
+          info_format: "application/json",
+          identify: false,
+          maxZoom: 22,
+        }}
+      />
+      <CustomWMSLayer
+        url="http://localhost:8080/geoserver/data/wms"
+        layers={"data:irigasi"}
+        options={{
+          format: "image/png",
+          transparent: "true",
+          tiled: "true",
+          info_format: "application/json",
+          identify: false,
+          maxZoom: 22,
+        }}
+      />
+      <CustomWMSLayer
+        url="http://localhost:8080/geoserver/data/wms"
+        layers={"data:jalan"}
+        options={{
+          format: "image/png",
+          transparent: "true",
+          tiled: "true",
+          info_format: "application/json",
+          identify: false,
+          maxZoom: 22,
+        }}
+      />
       <GetFeatureInfoUrlHandle/>
     </MapContainer>
   );

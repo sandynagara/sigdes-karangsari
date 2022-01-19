@@ -5,6 +5,9 @@ import Home from "./pages/Home";
 import { BrowserRouter , Routes , Route } from "react-router-dom";
 
 function App() {
+
+  document.title = "SIGDES KARANGSARI"
+
   return (
     <div className="App">
       <link

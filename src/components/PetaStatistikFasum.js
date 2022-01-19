@@ -1,5 +1,5 @@
 import React,{useEffect,useState} from 'react'
-import { MapContainer , useMap ,Popup,CircleMarker} from 'react-leaflet'
+import { MapContainer , useMap,TileLayer ,Popup,CircleMarker} from 'react-leaflet'
 import * as WMS from "leaflet.wms";
 import './PetaStatistikFasum.css'
 
@@ -62,6 +62,7 @@ function PetaStatistikFasum({daerah,setActive,kategori,tipeFilter}) {
                         touchZoom={false}
                         className="peta-statistik-fasum"
                     >
+                        {/* <TileLayer url="https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}" maxZoom={22} /> */}
                         <CustomWMSLayer
                             url="http://localhost:8080/geoserver/data/wms?"
                             layers={"data:bismillah"}
@@ -92,7 +93,6 @@ function PetaStatistikFasum({daerah,setActive,kategori,tipeFilter}) {
                         return(
                         <div className='item-fasum' onClick={()=>{
                             setSelectedFasum(e)
-                            console.log(e.geometry.coordinates[0][1],e.geometry.coordinates[0][0],"e")
                             setCenter([e.geometry.coordinates[0][1],e.geometry.coordinates[0][0]])
                             }}>
                             <p>{e.properties.nama}</p>

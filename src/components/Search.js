@@ -2,14 +2,15 @@ import React,{useState,useRef,useEffect} from 'react'
 import {Form} from 'react-bootstrap'
 import {AiOutlineWarning} from 'react-icons/ai'
 import "./Search.css"
+import LogoLoading from "../images/Loading.svg"
 
 function ItemSearch({data,urutan,queryNama,setOpen}){
     return (
         <div className="item-search" onClick={()=>{
             queryNama(data) 
-            setOpen("Bangunan")}} >
+            setOpen("Bangunan")}} 
+        >
             <div style={{fontWeight:"bold"}}>Bangunan {urutan + 1}</div>
-            {/* <div style={{fontSize:"11px",fontWeight:"100" ,marginTop:"3px"}}>{koordinat[0]}  {koordinat[1]}</div> */}
             <div style={{fontSize:"13px",marginTop:"3px"}}>{data.nama_dusun}</div>
             <div style={{fontSize:"13px",marginTop:"3px"}}>{data.rt}</div>
         </div>
@@ -30,18 +31,17 @@ function Search({open,queryNama,setOpen}) {
     const [login, setLogin] = useState(false)
     const [Daftarinput,setDaftarinput] = useState()
     const [listInput,setListInput] = useState(false)
+    const [loading, setLoading] = useState(false)
+    
     const formInput = useRef()
 
-    console.log("search")
-
-    
-
     var clickHandle = (e)=> {
+        setLoading(true)
         formInput.current.value = e
         setDaftarinput(false)
-        console.log(e)
-        var url = "http://localhost:5000/api/penduduk/"+e
+        var url = `http://localhost:5000/api/penduduk/${e}`
         panggil((result)=>{
+            setLoading(false)
             setListInput(result)
         },url)
     }
@@ -54,8 +54,7 @@ function Search({open,queryNama,setOpen}) {
 
     var inputHandle = (e) =>{
         if(e){
-            var url = "http://localhost:5000/api/caripenduduk/"+e
-            console.log()
+            var url = `http://localhost:5000/api/caripenduduk/${e}`
             panggil((result)=>{
                 setDaftarinput(result)
             },url)
@@ -63,6 +62,19 @@ function Search({open,queryNama,setOpen}) {
         }else{
             setDaftarinput(false)
         }
+    }
+
+    var submitHandle =(e)=>{
+        e.preventDefault()
+        setLoading(true)
+        var nama = e.target[0].value
+        setDaftarinput(false)
+        var url = `http://localhost:5000/api/penduduk/${nama}`
+        panggil((result)=>{
+            console.log(result)
+            setLoading(false)
+            setListInput(result)
+        },url)
     }
 
     useEffect(() => {
@@ -80,16 +92,17 @@ function Search({open,queryNama,setOpen}) {
     return (
         <div className="sidebar-search" style={open == "Search" ? { marginLeft:"55px"} : {marginLeft:"-330px"}}>
             {login ? <div>
-                <Form style={{display:"flex"}}>
+                <Form style={{display:"flex"}} onSubmit={submitHandle}>
                 <Form.Control type="text" style={{marginRight:"10px"}} placeholder="Cari nama" ref={formInput} onChange={(e)=>{inputHandle(e.target.value)}} />
                 <button variant="primary" className="search-button" >
-                    Cari
+                    {!loading && "Cari"}
+                    <img src={LogoLoading} alt="2" style={loading ? {width:"22px",height:"22px"} : {width:"0px",height:"0px"} }></img>
                 </button>
             </Form>
 
             <div style={{width:"80%" ,backgroundColor:"white"}}>
                 {Daftarinput && Daftarinput.map((e)=>{
-                    return <div style={{padding:"10px" ,textAlign:"left",cursor:"pointer"}} onClick={(result) => clickHandle(e.nama)}>
+                    return <div style={{padding:"10px" ,textAlign:"left",cursor:"pointer"}} onClick={() => clickHandle(e.nama)}>
                         {e.nama}
                     </div>
                 })}
@@ -101,11 +114,6 @@ function Search({open,queryNama,setOpen}) {
                 Data tidak ditemukan
             </div>}
             </div> : <AdminAccess/> }
-            
- 
-            
-            
-
         </div>
     )
 }

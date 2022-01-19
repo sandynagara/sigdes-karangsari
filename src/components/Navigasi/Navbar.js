@@ -41,7 +41,10 @@ function DropdownMenu({setScrollPosition}){
 function Navbar2() {
   const [scrollPosition, setScrollPosition] = useState(true);
   const [resize, setResize] = useState(true);
-  console.log(resize,"resize")
+  
+  useEffect(() => {
+    handleResize()
+  }, [])
  
   const handleScroll = () => {
     const positionY = window.pageYOffset;

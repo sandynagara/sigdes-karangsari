@@ -1,14 +1,16 @@
 import React,{useState,useEffect} from 'react'
 import {BsFillLayersFill} from 'react-icons/bs'
 import {IoArrowBackSharp} from 'react-icons/io5'
+import {AiOutlineClose,AiOutlineCheck} from 'react-icons/ai'
 import { MapContainer,useMap,GeoJSON } from 'react-leaflet'
 import * as WMS from "leaflet.wms";
+import loadingBlue from "../../images/Loading2.svg"
 import './Permohonan.css'
 
 function ItemPermohonan({data,setActiveGeometry,setGeometry,setUpdate,update}){
 
     var acceptHandler = () => {
-        const url = 'http://localhost:5000/api/permohonan/'+data.id
+        const url = 'http://localhost:5000/api/permohonan/persetujuan/'+data.id
         fetch(url,{
             method:"PUT", headers: {
                 'Accept': 'application/json',
@@ -28,7 +30,7 @@ function ItemPermohonan({data,setActiveGeometry,setGeometry,setUpdate,update}){
     }
 
     var declinenHandler = () => {
-        const url = 'http://localhost:5000/api/permohonan/'+data.id
+        const url = 'http://localhost:5000/api/permohonan/persetujuan/'+data.id
         fetch(url,{
             method:"PUT", headers: {
                 'Accept': 'application/json',
@@ -51,12 +53,12 @@ function ItemPermohonan({data,setActiveGeometry,setGeometry,setUpdate,update}){
         <td>{data.penggunaan}</td>
         <td className='geometry' onClick={()=>{setActiveGeometry(true) ; setGeometry(data.feature)}}><BsFillLayersFill style={{width:"20px",height:"20px"}} /></td>
         {data.hak ? 
-        <td style={{width:"200px",display:"flex"}}>
+        <td style={{display:"flex",justifyContent:"center"}}>
             <button className='decline' onClick={declinenHandler}>
-                Decline
+                <AiOutlineClose/>
             </button>
             <button className='accept' onClick={acceptHandler}>
-                Accept
+                <AiOutlineCheck/>
             </button>
         </td> :
         <td>{data.status}</td>
@@ -70,9 +72,9 @@ function ItemPermohonan({data,setActiveGeometry,setGeometry,setUpdate,update}){
 function PetaPermohonan({feature,setActiveGeometry}){
     const [position, setPosition] = useState([-7.864220975, 110.138661812]);
     const [first, setFirst] = useState(true);
+ 
 
     useEffect(() => {
-
         const koordinat = feature.coordinates[0][0][3]
         setPosition([koordinat[1],koordinat[0]])
     }, [feature])
@@ -136,7 +138,7 @@ function PetaPermohonan({feature,setActiveGeometry}){
 }
 
 function Permohonan({setActivePermohonan}) {
-
+    const [loading,setLoading] = useState(true)
     const [data, setData] = useState([{hak:false}])
     const [update,setUpdate] = useState(false)
     const [activeGeometry, setActiveGeometry] = useState(false)
@@ -154,14 +156,16 @@ function Permohonan({setActivePermohonan}) {
 
     useEffect(() => {
         const url = "http://localhost:5000/api/permohonan"
+        setLoading(true)
         Panggil((hasil)=>{
+            setLoading(false)
             setData(hasil)
-            console.log(hasil)
         },url)
     }, [update])
 
     return (
         <div className='edit-Data-backgroud'>
+              
             <div className='permohonan-container'>
                 <p>List Permohonan</p>
                 {activeGeometry ? <PetaPermohonan feature={geometry} setActiveGeometry={setActiveGeometry}/> : 
@@ -181,7 +185,9 @@ function Permohonan({setActivePermohonan}) {
                 }
                 
             </div>
-           
+            <div className='loading'>
+                <img src={loadingBlue} alt="2" style={loading ? {width:"100px",height:"100px"} : {width:"0px",height:"0px"} }></img>
+            </div>
             <div className='black-layer-fasum' onClick={()=>setActivePermohonan(false)}/>
         </div>
     )

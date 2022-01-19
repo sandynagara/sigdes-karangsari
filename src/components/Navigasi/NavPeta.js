@@ -10,7 +10,7 @@ function Icon({ icon ,judul ,open, setOpen}) {
 
     const changeOpenSidebar = () => {
         var style
-        if (open == judul) {
+        if (open === judul) {
             style = {borderRadius : "5px 0px 0px 5px" ,padding:"8px 18px 12px 10px" ,backgroundColor:"white",color:"black"}
         }
         return style
@@ -18,7 +18,7 @@ function Icon({ icon ,judul ,open, setOpen}) {
 
   return (
     <div style={{display:"flex" ,alignItems:"center"}}>
-      <div className="menu-logo" style={changeOpenSidebar()} onMouseEnter={() => {setHover(true)}} onMouseLeave={()=>{setHover(false)}} onClick={(e)=> {open == judul ?  setOpen(false) : setOpen(judul)}}>{icon}</div>
+      <div className="menu-logo" style={changeOpenSidebar()} onMouseEnter={() => {setHover(true)}} onMouseLeave={()=>{setHover(false)}} onClick={(e)=> {open === judul ?  setOpen(false) : setOpen(judul)}}>{icon}</div>
       {hover && <div className="menu-name">{judul}</div>}
     </div>
   );

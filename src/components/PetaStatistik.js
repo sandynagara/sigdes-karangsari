@@ -16,8 +16,10 @@ import logoPeople from "../icon/people.png";
 import logoPria from "../icon/pria.png";
 import logoWanita from "../icon/wanita.png";
 import logoTempatUmum from "../icon/tempatumum.png";
+import Skeleton ,{SkeletonTheme} from 'react-loading-skeleton'
+import 'react-loading-skeleton/dist/skeleton.css'
 
-function ItemStatistikPeta({ data,open, jenis, delay,setActive ,setKategori }) {
+function ItemStatistikPeta({ wait ,data,open, jenis, delay,setActive ,setKategori }) {
   
   const statistik = useRef()
 
@@ -58,7 +60,7 @@ function ItemStatistikPeta({ data,open, jenis, delay,setActive ,setKategori }) {
         logo = logoTempatUmum;
         break;
       default:
-        logo = logoPeople;
+        logo = logoBangunan;
     }
     return logo;
   };
@@ -67,29 +69,37 @@ function ItemStatistikPeta({ data,open, jenis, delay,setActive ,setKategori }) {
 
   return (
     <Fade right delay={delay}>
-      {open ? 
-      <div>
-        <div ref={statistik} className="data-logo"  style={{cursor:"pointer"}} onClick={()=>{setActive(true); setKategori(jenis)}}>
-          {jenis == "Rt" ? <AiOutlineBorderHorizontal style={{color:"black" ,width:"30px" ,height:"30px"}}/> : jenis == "Rw" ? <AiOutlineBorderInner style={{color:"black" ,width:"30px" ,height:"30px"}}/> : <img src={logo} />}
-          {data && (<h6  style={{ fontSize: "30px", marginTop: "10px" }}> {data}</h6>)}
-          <p >{jenis}</p>
+      <div style={{marginTop:"10px"}}>
+        {wait ? <SkeletonTheme baseColor="#ffffff" highlightColor="#c9c9c9" borderRadius="20px">
+            <p style={{width:"110px"}}>
+              <Skeleton height={140} />
+          </p>
+        </SkeletonTheme>
+        :
+        <div>
+            {open ? 
+          <div >
+            <div ref={statistik} className="data-logo"  style={{cursor:"pointer"}} onClick={()=>{setActive(true); setKategori(jenis)}}>
+              {jenis === "Rt" ? <AiOutlineBorderHorizontal style={{color:"black" ,width:"30px" ,height:"30px"}}/> : jenis === "Dusun" ? <AiOutlineBorderInner style={{color:"black" ,width:"30px" ,height:"30px"}}/> : <img src={logo} />}
+              {data && (<h6  style={{ fontSize: "30px", marginTop: "10px" }}> {data}</h6>)}
+              <p >{jenis}</p>
+            </div>
+          </div> 
+          : 
+          <div className="data-logo" style={{marginTop:"10px"}} >
+              {jenis === "Rt" ? <AiOutlineBorderHorizontal style={{color:"black" ,width:"30px" ,height:"30px"}}/> : jenis === "Dusun" ? <AiOutlineBorderInner style={{color:"black" ,width:"30px" ,height:"30px"}}/> : <img src={logo} />}
+              {data && (<h6 style={{ fontSize: "30px", marginTop: "10px" }}> {data}</h6>)}
+              <p>{jenis}</p>
+          </div>}
         </div>
-      </div> 
-      
-      : 
-
-      <div className="data-logo" >
-          {jenis == "Rt" ? <AiOutlineBorderHorizontal style={{color:"black" ,width:"30px" ,height:"30px"}}/> : jenis == "Rw" ? <AiOutlineBorderInner style={{color:"black" ,width:"30px" ,height:"30px"}}/> : <img src={logo} />}
-          {data && (<h6 style={{ fontSize: "30px", marginTop: "10px" }}> {data}</h6>)}
-          <p>{jenis}</p>
+        }
       </div>
-    }
       
     </Fade>
   );
 }
 
-function ListStatistikPeta({ dataStatitik,setActive,active,tipeFilter }) {
+function ListStatistikPeta({wait, dataStatitik,setActive,active,tipeFilter }) {
   const data = dataStatitik.data
   const [kategori, setKategori] = useState(false)
 
@@ -104,19 +114,19 @@ function ListStatistikPeta({ dataStatitik,setActive,active,tipeFilter }) {
             var stat = e.jsonb_build_object;
             switch (stat.kategori) {
               case "Peribadatan":
-                return  <ItemStatistikPeta data={stat.jumlah} delay={index * 200} jenis={stat.kategori} setActive = {setActive} setKategori = {setKategori} open={true}/>
+                return  <ItemStatistikPeta wait={wait} data={stat.jumlah} delay={index * 200} jenis={stat.kategori} setActive = {setActive} setKategori = {setKategori} open={true}/>
               case "Kesehatan":
-                return  <ItemStatistikPeta data={stat.jumlah} delay={index * 200} jenis={stat.kategori} setActive = {setActive} setKategori = {setKategori} open={true}/>
+                return  <ItemStatistikPeta wait={wait} data={stat.jumlah} delay={index * 200} jenis={stat.kategori} setActive = {setActive} setKategori = {setKategori} open={true}/>
               case "Pendidikan":
-                return  <ItemStatistikPeta data={stat.jumlah} delay={index * 200} jenis={stat.kategori} setActive = {setActive} setKategori = {setKategori} open={true}/>
+                return  <ItemStatistikPeta wait={wait} data={stat.jumlah} delay={index * 200} jenis={stat.kategori} setActive = {setActive} setKategori = {setKategori} open={true}/>
               case "Pemakaman":
-                return  <ItemStatistikPeta data={stat.jumlah} delay={index * 200} jenis={stat.kategori} setActive = {setActive} setKategori = {setKategori} open={true}/>
+                return  <ItemStatistikPeta wait={wait} data={stat.jumlah} delay={index * 200} jenis={stat.kategori} setActive = {setActive} setKategori = {setKategori} open={true}/>
               default:
                 break;
             }
           })
         ) : (
-          <ItemStatistikPeta open={false} data="0" jenis="Fasilitas Umum" />
+          <ItemStatistikPeta open={false} wait={wait} data="0" jenis="Fasilitas Umum" />
         )}
       </div>
       {tipeFilter !== "rt" && <div>
@@ -124,8 +134,8 @@ function ListStatistikPeta({ dataStatitik,setActive,active,tipeFilter }) {
           <b>Administrasi</b>
         </h5>
         <div className="list-item-statistik">
-            {tipeFilter === "desa" && <ItemStatistikPeta data={data.rw} jenis="Rw" /> }
-            <ItemStatistikPeta data={data.rt} jenis="Rt" />
+            {tipeFilter === "desa" && <ItemStatistikPeta wait={wait} data={data.rw} jenis="Dusun" /> }
+            <ItemStatistikPeta wait={wait}  data={data.rt} jenis="Rt" />
         </div>
       </div>}
       
@@ -137,13 +147,13 @@ function ListStatistikPeta({ dataStatitik,setActive,active,tipeFilter }) {
 function TipeStatistik({ tipe, tipeFillter }) {
   return (
     <div style={{ display: "flex", justifyContent: "center" }}>
-      <div className="tipeStatistik" style={tipeFillter == "desa"? { borderColor: "yellow", color: "yellow" }: {} } onClick={() => tipe("desa")}>
+      <div className="tipeStatistik" style={tipeFillter === "desa"? { borderColor: "yellow", color: "yellow" }: {} } onClick={() => tipe("desa")}>
         Desa
       </div>
-      <div className="tipeStatistik" style={ tipeFillter == "dusun"? { borderColor: "yellow", color: "yellow" }: {}} onClick={() => tipe("dusun")}>
+      <div className="tipeStatistik" style={ tipeFillter === "dusun"? { borderColor: "yellow", color: "yellow" }: {}} onClick={() => tipe("dusun")}>
         Dusun
       </div>
-      <div className="tipeStatistik" style={tipeFillter == "rt" ? { borderColor: "yellow", color: "yellow" } : {}} onClick={() => tipe("rt")}>
+      <div className="tipeStatistik" style={tipeFillter === "rt" ? { borderColor: "yellow", color: "yellow" } : {}} onClick={() => tipe("rt")}>
         RT
       </div>
     </div>
@@ -157,6 +167,7 @@ function PetaStatistik() {
   const [scrollPosition, setScrollPosition] = useState(true);
   const [active, setActive] = useState(false);
   const [dataInput, setDataInput] = useState(false)
+  const [wait, setWait] = useState(false)
 
   const handleScroll = () => {
       const position = document.documentElement.clientWidth;
@@ -166,6 +177,9 @@ function PetaStatistik() {
         setScrollPosition(true);
       }
   };
+
+  
+  window.addEventListener('resize', handleScroll, { passive: true });
 
   useEffect(() => {
     const position = document.documentElement.clientWidth;
@@ -182,7 +196,7 @@ function PetaStatistik() {
       setDataGeojson(result);
     }, urlDesa);
 
-    if (tipeFilter == "desa") {
+    if (tipeFilter === "desa") {
       var urlData = "http://localhost:5000/api/desa/data";
       Panggil((result) => {
         var json = {
@@ -195,8 +209,10 @@ function PetaStatistik() {
 
   useEffect(() => {
     if(dataInput){
+      setWait(true)
       var url ="http://localhost:5000/api/" +tipeFilter +"/"+dataInput;
           Panggil((result) => {
+            setWait(false)
             var json = {
               daerah: dataInput,
               data: result[0],
@@ -206,7 +222,7 @@ function PetaStatistik() {
     }
   }, [dataInput])
 
-  window.addEventListener('resize', handleScroll, { passive: true });
+ 
 
   var Panggil = (cb, url) => {
     fetch(url)
@@ -217,12 +233,12 @@ function PetaStatistik() {
 
   var eventHandle = (feature, layer) => {
       function labelPosition(){
-        if (tipeFilter == "dusun") {
+        if (tipeFilter === "dusun") {
           layer.bindTooltip(feature.properties.nama, {
             permanent: true,
             className: "label-dusun",
           });
-        } else if (tipeFilter == "rt"){
+        } else if (tipeFilter === "rt"){
           layer.bindTooltip(feature.properties.nama, {
             direction: 'left',
             permanent: true,
@@ -250,7 +266,9 @@ function PetaStatistik() {
         mouseout: () => layer.setStyle(style),
         click: () => {
           var url ="http://localhost:5000/api/" +tipeFilter +"/"+feature.properties.nama;
+          setWait(true)
           Panggil((result) => {
+            setWait(false)
             var json = {
               daerah: feature.properties.nama,
               data: result[0],
@@ -262,19 +280,11 @@ function PetaStatistik() {
       });
   };
 
-
-
   const style = {
     weight: 2,
     color: "white",
     fillOpacity: 0,
   };
-
-  window.addEventListener('resize', function(event) {
-    console.log(document.documentElement.clientWidth)
-  }, true);
-
-
 
   var SelectedLayer = () => {
     return (
@@ -288,7 +298,7 @@ function PetaStatistik() {
 
   var GeojsonHandler = () => {
     var geojson;
-    if (tipeFilter == "desa") {
+    if (tipeFilter === "desa") {
       geojson = <GeoJSON data={dataGeojson} style={style} />;
     } else {
       geojson = (
@@ -323,12 +333,12 @@ function PetaStatistik() {
             className="peta-statistik"
           >
             {dataGeojson && <GeojsonHandler />}
-            {dataStatitik && tipeFilter == "dusun" || tipeFilter == "rt" ? <SelectedLayer /> : ""}
+            {dataStatitik && tipeFilter === "dusun" || tipeFilter === "rt" ? <SelectedLayer /> : ""}
           </MapContainer>}
          
           <div className="data-peta-statistik">
-            {!scrollPosition && tipeFilter !== "desa" && <InputDusunRt tipeFilter={tipeFilter} setDataInput={(e)=>setDataInput(e)}/>}
-            {dataStatitik && <ListStatistikPeta tipeFilter = {tipeFilter} dataStatitik={dataStatitik} setActive = {setActive} active={active}/>}
+            {!scrollPosition && tipeFilter !== "desa" && <InputDusunRt setWait={setWait} tipeFilter={tipeFilter} setDataInput={(e)=>setDataInput(e)}/>}
+            {dataStatitik && <ListStatistikPeta wait={wait} tipeFilter = {tipeFilter} dataStatitik={dataStatitik} setActive = {setActive} active={active}/>}
           </div>
         </div>
       </div>

@@ -7,4 +7,5 @@
     top: 0;
     padding: 10px;
     transition: 500ms;
+    overflow: scroll;
 }

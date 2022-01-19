@@ -5,8 +5,6 @@ import Permohonan from './Prototype/Permohonan'
 
 function LoginPage({setLogin}){
 
-  
-
     var submitHandler = (e) => {
         e.preventDefault()
         const username = e.target.username.value
@@ -67,9 +65,9 @@ function Login({open}) {
         }},url)
     }
    }, [open])
-
+ 
     return (
-        <div className="login-container" style={open == "Admin" ? { marginLeft: "55px" } : { marginLeft: "-350px" }}>
+        <div className="login-container" style={open === "Admin" ? { marginLeft: "55px" } : { marginLeft: "-350px" }}>
             {login ?  <Profile setLogin={setLogin} setActivePermohonan={setActivePermohonan}/> :  <LoginPage setLogin={setLogin}/>}
             {activePermohonan &&   <Permohonan setActivePermohonan={setActivePermohonan}/>}
          

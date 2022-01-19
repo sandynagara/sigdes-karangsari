@@ -7,7 +7,7 @@ function Backgroud() {
     <div className="background" id="background">
       <div className="judul">
         <h1 >SIGDES KARANGSARI</h1>
-        <h6 style={{fontSize:20 ,fontWeight:"100",fontStyle:'italic'}}>Sistem Informasi Geografis Desa Karangsari</h6>
+        <h6 className="snipset">Sistem Informasi Geospasial Desa Karangsari</h6>
         <div style={{marginTop:"10px"}}>
         {/* <button className="about"><h6><b>ABOUT</b></h6></button> */}
         <Link to={"/dashboard"}>
