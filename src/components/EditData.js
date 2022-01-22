@@ -5,8 +5,8 @@
  import "leaflet-draw/dist/leaflet.draw.css";
  import * as WMS from "leaflet.wms";
  import { EditControl } from "react-leaflet-draw";
- import LogoLoading from "../../images/Loading.svg"
-
+ import LogoLoading from "../images/Loading.svg"
+ import configData from "./config.json";
 
  function InputEdit({label,data}){
 
@@ -35,7 +35,7 @@
   var onChangeHandler = (e) => {
     var input = e.target.value
     console.log(input)
-    const url = `http://localhost:5000/api/caripenduduk/${input}`
+    const url = configData.SERVER_URL+`caripenduduk/${input}`
     Panggil(hasil=>{
       setList(hasil)
     },url)
@@ -122,7 +122,7 @@
         e.preventDefault()
         const pemilik = e.target.Pemilik.value
         const penggunaan = e.target.Penggunaan.value
-        const url = "http://localhost:5000/api/permohonan"
+        const url = configData.SERVER_URL+"permohonan"
         setLoading(true)
         fetch(url,{method:"POST", headers: {
           'Accept': 'application/json',

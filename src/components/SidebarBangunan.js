@@ -5,7 +5,7 @@ import * as WMS from "leaflet.wms";
 import "leaflet/dist/leaflet.css";
 import Skeleton ,{SkeletonTheme} from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
-import EditData from "./Prototype/EditData";
+import EditData from "./EditData";
 
 function Sidebar({wait, queryNama, bangunan, open,setOpen }) {
   const [position, setPosition] = useState([-7.864220975, 110.138661812]);

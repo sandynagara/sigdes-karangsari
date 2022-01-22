@@ -4,13 +4,14 @@ import {IoArrowBackSharp} from 'react-icons/io5'
 import {AiOutlineClose,AiOutlineCheck} from 'react-icons/ai'
 import { MapContainer,useMap,GeoJSON } from 'react-leaflet'
 import * as WMS from "leaflet.wms";
-import loadingBlue from "../../images/Loading2.svg"
+import loadingBlue from "../images/Loading.svg"
 import './Permohonan.css'
+import configData from "./config.json";
 
 function ItemPermohonan({data,setActiveGeometry,setGeometry,setUpdate,update}){
 
     var acceptHandler = () => {
-        const url = 'http://localhost:5000/api/permohonan/persetujuan/'+data.id
+        const url =  configData.SERVER_URL+'permohonan/persetujuan/'+data.id
         fetch(url,{
             method:"PUT", headers: {
                 'Accept': 'application/json',
@@ -30,7 +31,7 @@ function ItemPermohonan({data,setActiveGeometry,setGeometry,setUpdate,update}){
     }
 
     var declinenHandler = () => {
-        const url = 'http://localhost:5000/api/permohonan/persetujuan/'+data.id
+        const url =  configData.SERVER_URL+'permohonan/persetujuan/'+data.id
         fetch(url,{
             method:"PUT", headers: {
                 'Accept': 'application/json',
@@ -155,7 +156,7 @@ function Permohonan({setActivePermohonan}) {
     }
 
     useEffect(() => {
-        const url = "http://localhost:5000/api/permohonan"
+        const url =  configData.SERVER_URL+"permohonan"
         setLoading(true)
         Panggil((hasil)=>{
             setLoading(false)

@@ -24,6 +24,9 @@ function Layer({open,setOpacityBasemap,setOpacityBangunan,setOpacityLanduse,setO
  
     return (
         <div className='layer' style={ open === "Layer" ? {marginLeft:"55px"} :  {marginLeft:"-250px"}}>
+            <div className='judul'>
+                <p style={{margin:"0px"}}><b>Layer</b></p>
+            </div>
             <ItemLayer label="Batas Rt" setOpacity={setOpacityBatasRt}/>
             <ItemLayer label="Batas Dusun" setOpacity={setOpacityBatasDusun}/>
             <ItemLayer label="Basemap" setOpacity={setOpacityBasemap}/>

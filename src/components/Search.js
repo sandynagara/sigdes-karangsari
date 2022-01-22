@@ -3,6 +3,7 @@ import {Form} from 'react-bootstrap'
 import {AiOutlineWarning} from 'react-icons/ai'
 import "./Search.css"
 import LogoLoading from "../images/Loading.svg"
+import configData from "./config.json";
 
 function ItemSearch({data,urutan,queryNama,setOpen}){
     return (
@@ -39,7 +40,7 @@ function Search({open,queryNama,setOpen}) {
         setLoading(true)
         formInput.current.value = e
         setDaftarinput(false)
-        var url = `http://localhost:5000/api/penduduk/${e}`
+        var url = configData.SERVER_URL+`penduduk/${e}`
         panggil((result)=>{
             setLoading(false)
             setListInput(result)
@@ -54,7 +55,7 @@ function Search({open,queryNama,setOpen}) {
 
     var inputHandle = (e) =>{
         if(e){
-            var url = `http://localhost:5000/api/caripenduduk/${e}`
+            var url = configData.SERVER_URL+`caripenduduk/${e}`
             panggil((result)=>{
                 setDaftarinput(result)
             },url)
@@ -69,7 +70,7 @@ function Search({open,queryNama,setOpen}) {
         setLoading(true)
         var nama = e.target[0].value
         setDaftarinput(false)
-        var url = `http://localhost:5000/api/penduduk/${nama}`
+        var url = configData.SERVER_URL+`penduduk/${nama}`
         panggil((result)=>{
             console.log(result)
             setLoading(false)
@@ -78,7 +79,7 @@ function Search({open,queryNama,setOpen}) {
     }
 
     useEffect(() => {
-        var url = "http://localhost:5000/api/admin"
+        var url = configData.SERVER_URL+"admin"
         if(open === "Search"){
             panggil((e)=>
             {if(e === "unauthorized"){

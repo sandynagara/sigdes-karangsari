@@ -1,0 +1,14 @@
+select.status{
+    width: 100%;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.sign-out-tambah{
+    background-color: red;
+    position: absolute;
+    bottom: 0;
+    margin-bottom: 35px;
+    width: 80%;
+}

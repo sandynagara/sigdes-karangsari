@@ -2,6 +2,7 @@ import React,{useEffect,useState} from 'react'
 import { MapContainer , useMap,TileLayer ,Popup,CircleMarker} from 'react-leaflet'
 import * as WMS from "leaflet.wms";
 import './PetaStatistikFasum.css'
+import configData from "./config.json";
 
 function PetaStatistikFasum({daerah,setActive,kategori,tipeFilter}) {
 
@@ -19,12 +20,12 @@ function PetaStatistikFasum({daerah,setActive,kategori,tipeFilter}) {
 
     useEffect(() => {
         if(tipeFilter === "desa"){
-            const url = "http://localhost:5000/api/desa/fasum/" + kategori
+            const url = configData.SERVER_URL+"desa/fasum/" + kategori
             Panggil((result)=>{
                 setData(result)
             },url)
         }else {
-            const url = `http://localhost:5000/api/${tipeFilter}/fasum/${kategori}&${daerah}`
+            const url = configData.SERVER_URL+`${tipeFilter}/fasum/${kategori}&${daerah}`
             Panggil((result)=>{
                 setData(result)
                 var koordinat = result.features[0].geometry.coordinates[0]
@@ -62,8 +63,8 @@ function PetaStatistikFasum({daerah,setActive,kategori,tipeFilter}) {
                         touchZoom={false}
                         className="peta-statistik-fasum"
                     >
-                        {/* <TileLayer url="https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}" maxZoom={22} /> */}
-                        <CustomWMSLayer
+                        <TileLayer url="https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}" maxZoom={22} />
+                        {/* <CustomWMSLayer
                             url="http://localhost:8080/geoserver/data/wms?"
                             layers={"data:bismillah"}
                             options={{
@@ -74,7 +75,7 @@ function PetaStatistikFasum({daerah,setActive,kategori,tipeFilter}) {
                             identify: false,
                             maxZoom: 22,
                             }}
-                        />
+                        />  */}
                         {data && data.features && data.features.map((e)=>{
                             var koordinat = e.geometry.coordinates[0]
                             return(  <CircleMarker center={[koordinat[1], koordinat[0]]} pathOptions={{ color: 'red' }} radius={10} >

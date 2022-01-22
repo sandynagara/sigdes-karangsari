@@ -3,6 +3,8 @@ import React, { useEffect, useState ,useRef } from "react";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import * as WMS from "leaflet.wms";
+import configData from "./config.json";
+import LogoLoading from "../images/LoadingYellow.svg"
 
 function Peta({setWait, queryNama,queryBangunan,setOpen,inputBasemap,opacityBasemap,opacityBangunan,opacityIrigasi,opacityLanduse,opacityJalan,opacitySungai,opacityBatasRt,opacityBatasDusun }) {
   const [position, setPosition] = useState(false);
@@ -10,7 +12,7 @@ function Peta({setWait, queryNama,queryBangunan,setOpen,inputBasemap,opacityBase
   const [selectedGeojson, setSelectedGeojson] = useState(false);
   const [first, setFirst] = useState(true)
   const [map, setMap] = useState(false)
-
+  const [loading, setLoading] = useState(false);
   const tileRef = useRef();
  
   useEffect(() => {
@@ -35,6 +37,8 @@ function Peta({setWait, queryNama,queryBangunan,setOpen,inputBasemap,opacityBase
       .then((json) => cb(json))
       .catch((err)=>{
         console.log(err,"err")
+        setLoading(false)
+        setWait(false)
       });
   };
 
@@ -87,20 +91,21 @@ function Peta({setWait, queryNama,queryBangunan,setOpen,inputBasemap,opacityBase
     map = useMapEvents({
       click(e) {
         setWait(true)
+        setLoading(true)
         var url = getFeatureInfoUrl(
-          "http://localhost:8080/geoserver/data/wms?",map,e
+          configData.SERVER_GEOSERVER+"geoserver/data/wms?",map,e
         );
           
         panggil((result) => {
           var numb = result.features[0].id.match(/\d/g);
           numb = numb.join("");
-            var url =  "http://localhost:5000/api/bangunanAdmin/"+numb
+            var url =  configData.SERVER_URL+"bangunanAdmin/"+numb
             panggil((result)=>{
-              console.log(result,"2")
               if(result==="unauthorized"){
-                var url =  "http://localhost:5000/api/bangunanUmum/"+numb
+                var url =  configData.SERVER_URL+"bangunanUmum/"+numb
                 panggil((result)=>{
                   setWait(false)
+                  setLoading(false)
                   if(result.penggunaan === null) result.penggunaan = "Tidak Diketahui"
                   queryBangunan(result)
                   setSelectedGeojson(result.feature)
@@ -110,6 +115,7 @@ function Peta({setWait, queryNama,queryBangunan,setOpen,inputBasemap,opacityBase
               }else{
                 console.log(result,"2")
                 setWait(false)
+                setLoading(false)
                 result.id_bangunan = numb
                 if(result.nama === null) result.nama = "Tidak Diketahui"
                 if(result.penggunaan === null) result.penggunaan = "Tidak Diketahui"
@@ -171,7 +177,11 @@ function Peta({setWait, queryNama,queryBangunan,setOpen,inputBasemap,opacityBase
   }, [opacityBasemap])
 
   return (
-    <MapContainer
+    <div style={{display:"flex",justifyContent:"center",alignItems:"center"}}>
+      <div style={{zIndex:"999",position:"absolute",margin:"auto"}}>
+        <img src={LogoLoading} alt="2" style={ loading ? {width:"100px",height:"100px"}:{width:"0px",height:"0px"}}></img>
+      </div>
+      <MapContainer
       center={[-7.864220975, 110.138661812]}
       zoom={17}
       maxZoom={22}
@@ -179,12 +189,13 @@ function Peta({setWait, queryNama,queryBangunan,setOpen,inputBasemap,opacityBase
       zoomControl={false}
       whenReady={(e)=>setMap(e)}
     >
+      
       {position && <Changedview center={position}/> }
       {selectedGeojson && <SelectedLayerHandler/> }
       {changeBasemap ? <TileLayerHandler /> : <TileLayer ref={tileRef} url={inputBasemap} maxZoom={22} />}
 
       <CustomWMSLayer
-        url="http://localhost:8080/geoserver/data/wms"
+        url={configData.SERVER_GEOSERVER+"geoserver/data/wms"}
         layers={"data:landuse"}
         options={{
           format: "image/png",
@@ -197,7 +208,7 @@ function Peta({setWait, queryNama,queryBangunan,setOpen,inputBasemap,opacityBase
         }}
       />
       <CustomWMSLayer
-        url="http://localhost:8080/geoserver/data/wms"
+        url={configData.SERVER_GEOSERVER+"geoserver/data/wms"}
         layers={"data:bangunan"}
         options={{
           format: "image/png",
@@ -209,7 +220,7 @@ function Peta({setWait, queryNama,queryBangunan,setOpen,inputBasemap,opacityBase
         }}
       />
       <CustomWMSLayer
-        url="http://localhost:8080/geoserver/data/wms"
+        url={configData.SERVER_GEOSERVER+"geoserver/data/wms"}
         layers={"data:batasrt"}
         options={{
           format: "image/png",
@@ -221,7 +232,7 @@ function Peta({setWait, queryNama,queryBangunan,setOpen,inputBasemap,opacityBase
         }}
       />
       <CustomWMSLayer
-        url="http://localhost:8080/geoserver/data/wms"
+        url={configData.SERVER_GEOSERVER+"geoserver/data/wms"}
         layers={"data:batasdusun"}
         options={{
           format: "image/png",
@@ -233,7 +244,7 @@ function Peta({setWait, queryNama,queryBangunan,setOpen,inputBasemap,opacityBase
         }}
       />
       <CustomWMSLayer
-        url="http://localhost:8080/geoserver/data/wms"
+        url={configData.SERVER_GEOSERVER+"geoserver/data/wms"}
         layers={"data:sungai"}
         options={{
           format: "image/png",
@@ -245,7 +256,7 @@ function Peta({setWait, queryNama,queryBangunan,setOpen,inputBasemap,opacityBase
         }}
       />
       <CustomWMSLayer
-        url="http://localhost:8080/geoserver/data/wms"
+        url={configData.SERVER_GEOSERVER+"geoserver/data/wms"}
         layers={"data:irigasi"}
         options={{
           format: "image/png",
@@ -257,7 +268,7 @@ function Peta({setWait, queryNama,queryBangunan,setOpen,inputBasemap,opacityBase
         }}
       />
       <CustomWMSLayer
-        url="http://localhost:8080/geoserver/data/wms"
+        url={configData.SERVER_GEOSERVER+"geoserver/data/wms"}
         layers={"data:jalan"}
         options={{
           format: "image/png",
@@ -270,6 +281,8 @@ function Peta({setWait, queryNama,queryBangunan,setOpen,inputBasemap,opacityBase
       />
       <GetFeatureInfoUrlHandle/>
     </MapContainer>
+    </div>
+ 
   );
 }
 

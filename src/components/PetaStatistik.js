@@ -18,6 +18,7 @@ import logoWanita from "../icon/wanita.png";
 import logoTempatUmum from "../icon/tempatumum.png";
 import Skeleton ,{SkeletonTheme} from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
+import configData from "./config.json";
 
 function ItemStatistikPeta({ wait ,data,open, jenis, delay,setActive ,setKategori }) {
   
@@ -191,13 +192,13 @@ function PetaStatistik() {
   }, [])
 
   useEffect(() => {
-    var urlDesa = "http://localhost:5000/api/" + tipeFilter;
+    var urlDesa = configData.SERVER_URL+ tipeFilter;
     Panggil((result) => {
       setDataGeojson(result);
     }, urlDesa);
 
     if (tipeFilter === "desa") {
-      var urlData = "http://localhost:5000/api/desa/data";
+      var urlData = configData.SERVER_URL+"desa/data";
       Panggil((result) => {
         var json = {
           data: result[0],
@@ -210,7 +211,7 @@ function PetaStatistik() {
   useEffect(() => {
     if(dataInput){
       setWait(true)
-      var url ="http://localhost:5000/api/" +tipeFilter +"/"+dataInput;
+      var url =configData.SERVER_URL +tipeFilter +"/"+dataInput;
           Panggil((result) => {
             setWait(false)
             var json = {
@@ -265,7 +266,7 @@ function PetaStatistik() {
         ),
         mouseout: () => layer.setStyle(style),
         click: () => {
-          var url ="http://localhost:5000/api/" +tipeFilter +"/"+feature.properties.nama;
+          var url =configData.SERVER_URL +tipeFilter +"/"+feature.properties.nama;
           setWait(true)
           Panggil((result) => {
             setWait(false)

@@ -55,6 +55,7 @@
     cursor: pointer;
     margin: 5px 10px;
     border-radius: 5px;
+    border: solid 1px rgb(228, 228, 228);
     background-color: rgb(255, 255, 255);
 }
 

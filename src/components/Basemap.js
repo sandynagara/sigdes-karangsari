@@ -7,14 +7,8 @@ import OpenToPo from '../images/Basemap/OpenToPo.jpg'
 import StadiaDark from '../images/Basemap/StadiaDark.jpg'
 import GoogleMaps from '../images/Basemap/GoogleMaps.jpg'
 import GoogleStreet from '../images/Basemap/GoogleStreet.jpg'
-import FotoUdara from '../images/Basemap/FotoUdara.jpg'
 
 const jenisBasemap = [
-  {
-    url: "Foto Udara",
-    nama: "Foto Udara",
-    gambar: FotoUdara,
-  },
   {
     url: "https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}",
     nama: "Google Satelite",
@@ -57,7 +51,7 @@ function ItemBasemap({item,setInputBasemap,inputBasemap}){
   return(
     <div className="item-basemap" onClick={()=>setInputBasemap(item.url)}>
       <div className="judul">
-        <div className="radio" style={inputBasemap===item.url ? {backgroundColor:"#673AB7"} : {}}></div>
+        <div className="radio" style={inputBasemap===item.url ? {backgroundColor:"#000000"} : {}}></div>
         <p>{item.nama}</p>
       </div>
       <img src={item.gambar} alt=""/>
