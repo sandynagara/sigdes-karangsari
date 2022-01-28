@@ -4,7 +4,7 @@ import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import * as WMS from "leaflet.wms";
 import configData from "./config.json";
-import LogoLoading from "../images/LoadingYellow.svg"
+import LogoLoading from "../images/LoadingYellow.svg" 
 
 function Peta({setWait, queryNama,queryBangunan,setOpen,inputBasemap,opacityBasemap,opacityBangunan,opacityIrigasi,opacityLanduse,opacityJalan,opacitySungai,opacityBatasRt,opacityBatasDusun }) {
   const [position, setPosition] = useState(false);
@@ -21,7 +21,6 @@ function Peta({setWait, queryNama,queryBangunan,setOpen,inputBasemap,opacityBase
 
   useEffect(() => {
     if(queryNama){
-      console.log(queryNama)
       var koordinat = queryNama.center.coordinates;
       setPosition([koordinat[1], koordinat[0]]);
       setSelectedGeojson(queryNama.feature)
@@ -62,8 +61,8 @@ function Peta({setWait, queryNama,queryBangunan,setOpen,inputBasemap,opacityBase
         bbox: map.getBounds().toBBoxString(),
         height: size.y,
         width: size.x,
-        layers: "karangsari",
-        query_layers: "karangsari",
+        layers: "bangunan",
+        query_layers: "bangunan",
         info_format: "application/json",
         X: Math.round(e.containerPoint.x),
         Y: Math.round(e.containerPoint.y),
@@ -74,7 +73,6 @@ function Peta({setWait, queryNama,queryBangunan,setOpen,inputBasemap,opacityBase
 
   var CustomWMSLayer =  (props) => {
     var map = useMap();
-
       if(first){
         const { url, options, layers } = props;
         const source = WMS.source(url, options);
@@ -93,13 +91,14 @@ function Peta({setWait, queryNama,queryBangunan,setOpen,inputBasemap,opacityBase
         setWait(true)
         setLoading(true)
         var url = getFeatureInfoUrl(
-          configData.SERVER_GEOSERVER+"geoserver/data/wms?",map,e
+          configData.SERVER_GEOSERVER+"geoserver/karangsari/wms?",map,e
         );
-          
+        
         panggil((result) => {
           var numb = result.features[0].id.match(/\d/g);
           numb = numb.join("");
             var url =  configData.SERVER_URL+"bangunanAdmin/"+numb
+            console.log(result,"result")
             panggil((result)=>{
               if(result==="unauthorized"){
                 var url =  configData.SERVER_URL+"bangunanUmum/"+numb
@@ -113,7 +112,6 @@ function Peta({setWait, queryNama,queryBangunan,setOpen,inputBasemap,opacityBase
                 },url
                 )
               }else{
-                console.log(result,"2")
                 setWait(false)
                 setLoading(false)
                 result.id_bangunan = numb
@@ -145,23 +143,22 @@ function Peta({setWait, queryNama,queryBangunan,setOpen,inputBasemap,opacityBase
 
   useEffect(() => {
     if(map){
-      console.log(map)
       map.target.eachLayer(function(layer) {
-        if(layer._name==="data:jalan"){
+        if(layer._name==="karangsari:jalan"){
           layer.setOpacity(opacityJalan*0.01)
-        }else if(layer._name==="data:batasrt"){
+        }else if(layer._name==="karangsari:batasrt"){
           layer.setOpacity(opacityBatasRt*0.01)
-        }else if(layer._name==="data:landuse"){
+        }else if(layer._name==="karangsari:landuse"){
           layer.setOpacity(opacityLanduse*0.01)
-        }else if(layer._name==="data:bangunan"){
+        }else if(layer._name==="karangsari:bangunan"){
           layer.setOpacity(opacityBangunan*0.01)
-        }else if(layer._name==="data:sungai"){
+        }else if(layer._name==="karangsari:sungai"){
           layer.setOpacity(opacitySungai*0.01)
-        }else if(layer._name==="data:batasdusun"){
+        }else if(layer._name==="karangsari:batasdusun"){
           layer.setOpacity(opacityBatasDusun*0.01)
-        }else if(layer._name==="data:irigasi"){
+        }else if(layer._name==="karangsari:irigasi"){
           layer.setOpacity(opacityIrigasi*0.01)
-        }else if(layer._name==="data:bismillah"){
+        }else if(layer._name==="karangsari:bismillah"){
           layer.setOpacity(opacityBasemap*0.01)
         }
       });
@@ -195,8 +192,8 @@ function Peta({setWait, queryNama,queryBangunan,setOpen,inputBasemap,opacityBase
       {changeBasemap ? <TileLayerHandler /> : <TileLayer ref={tileRef} url={inputBasemap} maxZoom={22} />}
 
       <CustomWMSLayer
-        url={configData.SERVER_GEOSERVER+"geoserver/data/wms"}
-        layers={"data:landuse"}
+        url={configData.SERVER_GEOSERVER+"geoserver/karangsari/wms"}
+        layers={"karangsari:landuse"}
         options={{
           format: "image/png",
           transparent: "true",
@@ -208,8 +205,8 @@ function Peta({setWait, queryNama,queryBangunan,setOpen,inputBasemap,opacityBase
         }}
       />
       <CustomWMSLayer
-        url={configData.SERVER_GEOSERVER+"geoserver/data/wms"}
-        layers={"data:bangunan"}
+        url={configData.SERVER_GEOSERVER+"geoserver/karangsari/wms"}
+        layers={"karangsari:bangunan"}
         options={{
           format: "image/png",
           transparent: "true",
@@ -220,8 +217,8 @@ function Peta({setWait, queryNama,queryBangunan,setOpen,inputBasemap,opacityBase
         }}
       />
       <CustomWMSLayer
-        url={configData.SERVER_GEOSERVER+"geoserver/data/wms"}
-        layers={"data:batasrt"}
+        url={configData.SERVER_GEOSERVER+"geoserver/karangsari/wms"}
+        layers={"karangsari:batasrt"}
         options={{
           format: "image/png",
           transparent: "true",
@@ -232,8 +229,8 @@ function Peta({setWait, queryNama,queryBangunan,setOpen,inputBasemap,opacityBase
         }}
       />
       <CustomWMSLayer
-        url={configData.SERVER_GEOSERVER+"geoserver/data/wms"}
-        layers={"data:batasdusun"}
+        url={configData.SERVER_GEOSERVER+"geoserver/karangsari/wms"}
+        layers={"karangsari:batasdusun"}
         options={{
           format: "image/png",
           transparent: "true",
@@ -244,8 +241,8 @@ function Peta({setWait, queryNama,queryBangunan,setOpen,inputBasemap,opacityBase
         }}
       />
       <CustomWMSLayer
-        url={configData.SERVER_GEOSERVER+"geoserver/data/wms"}
-        layers={"data:sungai"}
+        url={configData.SERVER_GEOSERVER+"geoserver/karangsari/wms"}
+        layers={"karangsari:sungai"}
         options={{
           format: "image/png",
           transparent: "true",
@@ -256,8 +253,8 @@ function Peta({setWait, queryNama,queryBangunan,setOpen,inputBasemap,opacityBase
         }}
       />
       <CustomWMSLayer
-        url={configData.SERVER_GEOSERVER+"geoserver/data/wms"}
-        layers={"data:irigasi"}
+        url={configData.SERVER_GEOSERVER+"geoserver/karangsari/wms"}
+        layers={"karangsari:irigasi"}
         options={{
           format: "image/png",
           transparent: "true",
@@ -268,8 +265,8 @@ function Peta({setWait, queryNama,queryBangunan,setOpen,inputBasemap,opacityBase
         }}
       />
       <CustomWMSLayer
-        url={configData.SERVER_GEOSERVER+"geoserver/data/wms"}
-        layers={"data:jalan"}
+        url={configData.SERVER_GEOSERVER+"geoserver/karangsari/wms"}
+        layers={"karangsari:jalan"}
         options={{
           format: "image/png",
           transparent: "true",

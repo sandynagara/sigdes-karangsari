@@ -6,6 +6,7 @@ import "leaflet/dist/leaflet.css";
 import Skeleton ,{SkeletonTheme} from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
 import EditData from "./EditData";
+import configData from "./config.json";
 
 function Sidebar({wait, queryNama, bangunan, open,setOpen }) {
   const [position, setPosition] = useState([-7.864220975, 110.138661812]);
@@ -23,7 +24,6 @@ function Sidebar({wait, queryNama, bangunan, open,setOpen }) {
       Basemap.addTo(map);
       setFirst(false);
     }
-
     return null;
   }
  
@@ -45,15 +45,12 @@ function Sidebar({wait, queryNama, bangunan, open,setOpen }) {
   useEffect(() => {
     if (bangunan) {
       var koordinat = bangunan.center.coordinates;
-      console.log(bangunan, "koordinat");
       setPosition([koordinat[1], koordinat[0]]);
       setData(bangunan);
     }
   }, [bangunan]);
 
   useEffect(() => {
-    console.log("check");
-    console.log(queryNama);
     if (queryNama) {
       setData(queryNama);
       var koordinat = queryNama.center.coordinates;
@@ -81,8 +78,8 @@ function Sidebar({wait, queryNama, bangunan, open,setOpen }) {
             <Changedview center={position} />
             {bangunan || queryNama ? <GeojsonHandler /> : ""}
             <CustomWMSLayer
-              url="http://localhost:8080/geoserver/data/wms?"
-              layers={"data:bismillah"}
+              url={configData.SERVER_GEOSERVER+"geoserver/karangsari/wms?"}
+              layers={"karangsari:bismillah"}
               options={{
                 format: "image/png",
                 transparent: "true",

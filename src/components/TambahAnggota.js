@@ -17,7 +17,6 @@ function TambahAnggota({setTambahAnggota}) {
     if(passwordForm.current.value=="" || usernameForm.current.value=="" || passwordFormConfirm.current.value==""){
       submitButton.current.disabled=true
       submitButton.current.style.backgroundColor = "rgb(180, 210, 248)"
-      console.log(submitButton.current.disabled)
   }else{
       submitButton.current.disabled=false
       submitButton.current.style.backgroundColor = "rgb(26, 122, 247)"
@@ -27,7 +26,6 @@ function TambahAnggota({setTambahAnggota}) {
   var submitHandler = (e) => {
     setLoading(true)
     e.preventDefault()
-    console.log(e.target.status.value)
     const username = e.target.username.value
     const password = e.target.password.value
     const status = e.target.status.value
@@ -70,15 +68,15 @@ function TambahAnggota({setTambahAnggota}) {
         <option value="Admin">Admin</option>
         <option value="Super Admin">Super Admin</option>
       </select>
-      <button ref={submitButton}>
+      <button ref={submitButton}> 
         {!loading && "Sign Up"}
         <img src={LogoLoading} alt="2" style={loading ? {width:"22px",height:"22px"} : {width:"0px",height:"0px"} }></img>
       </button>
     </form>
-    <button className='sign-out-tambah' onClick={()=>setTambahAnggota(false)} style={{backgroundColor:"red",width:"87%"}}>
+    <button className='kembali' onClick={()=>setTambahAnggota(false)} style={{backgroundColor:"red",width:"87%",marginBottom:"35px"}}>
       Kembali    
     </button>
-    {error && <div style={{backgroundColor:"red",marginBottom:"35px",padding:"5px",textAlign:"center",borderRadius:"5px"}}><p style={{color:"white",margin:"0px"}}>{error}</p></div>}
+    {error && <div style={{backgroundColor:"red",padding:"5px",textAlign:"center",borderRadius:"5px"}}><p style={{color:"white",margin:"0px"}}>{error}</p></div>}
   </div>;
 }
 

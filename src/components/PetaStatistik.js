@@ -266,7 +266,7 @@ function PetaStatistik() {
         ),
         mouseout: () => layer.setStyle(style),
         click: () => {
-          var url =configData.SERVER_URL +tipeFilter +"/"+feature.properties.nama;
+          var url = configData.SERVER_URL +tipeFilter +"/"+feature.properties.nama;
           setWait(true)
           Panggil((result) => {
             setWait(false)
@@ -332,6 +332,7 @@ function PetaStatistik() {
             zoomControl={false}
             touchZoom={false}
             className="peta-statistik"
+            attributionControl={false}
           >
             {dataGeojson && <GeojsonHandler />}
             {dataStatitik && tipeFilter === "dusun" || tipeFilter === "rt" ? <SelectedLayer /> : ""}

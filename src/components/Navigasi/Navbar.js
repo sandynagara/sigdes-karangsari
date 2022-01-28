@@ -8,7 +8,6 @@ const dataNav = ["Statistik"];
 function DropdownMenu({setScrollPosition}){
 
   const [active, setActive] = useState(false)
-  console.log(active)
  
   return(
     <div>

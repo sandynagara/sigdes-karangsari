@@ -7,10 +7,6 @@ import Footer from '../components/Footer'
 
 function Home() {
 
-    useEffect(() => {
-        document.title = "SIGDES KARANGSARI"
-    }, [])
-
     return (
         <div>
             <NavbarHome/>

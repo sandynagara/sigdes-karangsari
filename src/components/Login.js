@@ -15,11 +15,9 @@ function LoginPage({setLogin}){
     var passwordForm = useRef()
 
     var checkButton = (e) => {
-        console.log(e)
         if(passwordForm.current.value=="" || usernameForm.current.value==""){
             buttonLogin.current.disabled=true
             buttonLogin.current.style.backgroundColor = "rgb(180, 210, 248)"
-            console.log(buttonLogin.current.disabled)
         }else{
             buttonLogin.current.disabled=false
             buttonLogin.current.style.backgroundColor = "rgb(26, 122, 247)"
@@ -29,7 +27,6 @@ function LoginPage({setLogin}){
     var submitHandler = (e) => {
         setLoading(true)
         e.preventDefault()
-        console.log(buttonLogin.current.disabled)
         const username = e.target.username.value
         const password = e.target.password.value
         const url = configData.SERVER_URL+"login"
@@ -44,7 +41,6 @@ function LoginPage({setLogin}){
         }).then(response=> response.json())
         .then(json=>{
             setLoading(false)
-            console.log(json)
             if(json.RTN){
                 setLogin(true)
             }else{

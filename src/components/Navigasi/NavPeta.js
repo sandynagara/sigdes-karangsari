@@ -1,4 +1,4 @@
-import React,{useState} from "react";
+import React,{useRef, useState} from "react";
 import "./NavPeta.css";
 import * as Ai from "react-icons/ai";
 import * as Bs from "react-icons/bs";

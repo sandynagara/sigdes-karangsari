@@ -9,3 +9,23 @@
     transition: 500ms;
     overflow: scroll;
 }
+
+/* width */
+.sidebar-container::-webkit-scrollbar {
+    width: 10px;
+  }
+  
+  /* Track */
+  .sidebar-container::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+  
+  /* Handle */
+  .sidebar-container::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.7);
+  }
+  
+  /* Handle on hover */
+  .sidebar-container::-webkit-scrollbar-thumb:hover {
+    background: rgba(20, 20, 20, 0.8);
+}

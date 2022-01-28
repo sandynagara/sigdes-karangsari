@@ -51,6 +51,7 @@ function Search({open,queryNama,setOpen}) {
         fetch(url, {credentials: 'include'})
         .then((res)=>res.json())
         .then(json=>cb(json))
+        .catch(err=>console.log(err))
      }
 
     var inputHandle = (e) =>{
@@ -72,7 +73,6 @@ function Search({open,queryNama,setOpen}) {
         setDaftarinput(false)
         var url = configData.SERVER_URL+`penduduk/${nama}`
         panggil((result)=>{
-            console.log(result)
             setLoading(false)
             setListInput(result)
         },url)

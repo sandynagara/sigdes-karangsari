@@ -56,8 +56,8 @@
 
 .background .judul .masuk:hover{
     border-color: rgb(255, 255, 255);
-    background-color: rgba(0, 0, 0,1);
-    color: rgb(255, 255, 255);
+    background-color: rgb(255, 255, 255);
+    color: rgb(0, 0, 0);
     transition: 500ms;
 }
 
@@ -75,6 +75,28 @@
     font-style: italic;
 }
 
+.background .button-background {
+    margin-top: 10px;
+}
+
+.background .masuk.webdesa{
+    width:190px;
+    height: 60px;
+    border-color: rgb(255, 255, 255);
+    border-width: 2px;
+    border-radius: 5px;
+    background-color: rgba(221, 221, 221, 0);
+    color: white;
+}
+
+.background .masuk.sigdes{
+    margin-left: 20px;
+}
+
+.background .masuk.sigdes:hover{
+    background-color: rgb(211, 211, 211);
+}
+
 @media only screen and (max-width: 600px) {
     .background .judul h1 {
       font-size: 45px;
@@ -82,5 +104,15 @@
 
     .background .judul .snipset {
         font-size: 16px;
+    }
+
+    .background .masuk.sigdes{
+        margin-left: 0px;
+        margin-top: 15px;
+    }
+
+    .background .button-background {
+        display: flex;
+        flex-direction: column;
     }
 }

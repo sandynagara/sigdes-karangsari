@@ -7,6 +7,8 @@ import OpenToPo from '../images/Basemap/OpenToPo.jpg'
 import StadiaDark from '../images/Basemap/StadiaDark.jpg'
 import GoogleMaps from '../images/Basemap/GoogleMaps.jpg'
 import GoogleStreet from '../images/Basemap/GoogleStreet.jpg'
+import EsriStreet from '../images/Basemap/EsriStreetMap.jpg'
+import CartoDb from '../images/Basemap/CartoDb.jpg'
 
 const jenisBasemap = [
   {
@@ -20,9 +22,19 @@ const jenisBasemap = [
     gambar: GoogleStreet,
   },
   {
+    url: "https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}",
+    nama: "Esri WorldStreetMap",
+    gambar: EsriStreet,
+  },
+  {
     url: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
     nama: "OpenStreetMap",
     gambar: OpenStreetMap,
+  },
+  {
+    url: "https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png",
+    nama: "CartoDB",
+    gambar: CartoDb,
   },
   {
     url: "https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png",

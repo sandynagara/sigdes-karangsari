@@ -8,12 +8,14 @@ function Backgroud() {
       <div className="judul">
         <h1 >SIGDES KARANGSARI</h1>
         <h6 className="snipset">Sistem Informasi Geospasial Desa Karangsari</h6>
-        <div style={{marginTop:"10px"}}>
+        <div class="button-background">
         {/* <button className="about"><h6><b>ABOUT</b></h6></button> */}
-        <Link to={"/dashboard"}>
-          <button className="masuk" type="button"><h6><b>MASUK SIGDES</b></h6></button>
-        </Link>
- 
+          <a href="http://karangsari-kulonprogo.desa.id/index.php/first">
+            <button className="masuk webdesa" type="button"><h6><b>MASUK WEB DESA</b></h6></button>
+          </a>
+          <Link to={"/dashboard"}>
+            <button className="masuk sigdes" type="button"><h6><b>MASUK SIGDES</b></h6></button>
+          </Link>
         </div>
        
       </div>

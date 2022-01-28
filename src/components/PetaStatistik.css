@@ -57,7 +57,7 @@
 
 .data-logo{
     width: 110px;
-    min-width: 110px;
+    min-width: 110px; 
     min-height: 140px;
     display: flex;
     flex-direction: column;

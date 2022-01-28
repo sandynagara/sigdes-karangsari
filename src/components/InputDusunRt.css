@@ -44,7 +44,7 @@
 /* width */
 .dropdown-input-isi::-webkit-scrollbar {
     width: 10px;
-  }
+  } 
   
   /* Track */
 .dropdown-input-isi::-webkit-scrollbar-track {
@@ -59,7 +59,7 @@
   /* Handle on hover */
 .dropdown-input-isi::-webkit-scrollbar-thumb:hover {
     background: rgba(30,94,255, 0.8);
-  }
+}
 
 .item-dropdown{
     text-align: left;

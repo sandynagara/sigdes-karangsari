@@ -34,7 +34,6 @@ function InputDusunRt({setDataInput,tipeFilter}) {
 
     var onChangeHandle = (e) =>{
         setActive(true);
-        console.log(e.target.value)
         if(tipeFilter === "dusun" ){
             setDataFillter(filterItems(dusun,e.target.value))
         }else{

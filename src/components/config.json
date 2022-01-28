@@ -1,4 +1,4 @@
 {
-    "SERVER_URL": "http://localhost:5000/api/",
-    "SERVER_GEOSERVER": "http://localhost:8080/"
+    "SERVER_URL": "http://geoportal.ppids.ft.ugm.ac.id/api/",
+    "SERVER_GEOSERVER": "http://geoportal.ppids.ft.ugm.ac.id/"
 }

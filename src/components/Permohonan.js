@@ -122,17 +122,17 @@ function PetaPermohonan({feature,setActiveGeometry}){
             {feature && <GeojsonHandler />}
             <Changedview center={position} />
             <CustomWMSLayer
-                url="http://localhost:8080/geoserver/data/wms?"
-                layers={"data:bismillah"}
-                options={{
-                    format: "image/png",
-                    transparent: "true",
-                    tiled: "true",
-                    info_format: "application/json",
-                    identify: false,
-                    maxZoom: 22,
-                    }}
-                />
+              url={configData.SERVER_GEOSERVER+"geoserver/karangsari/wms?"}
+              layers={"karangsari:bismillah"}
+              options={{
+                format: "image/png",
+                transparent: "true",
+                tiled: "true",
+                info_format: "application/json",
+                identify: false,
+                maxZoom: 22,
+              }}
+            />
          </MapContainer>
     </div>
     )
@@ -177,7 +177,7 @@ function Permohonan({setActivePermohonan}) {
                         <th>Pemilik</th>
                         <th>Penggunaan</th>
                         <th>Geometry</th>
-                        <th>Status</th>
+                        {data[0] && data[0].hak ? <th>Status</th> : <th>Aksi</th>}
                     </tr>
                     {data[0] ? data.map(data=>{
                         return <ItemPermohonan data={data} setGeometry={setGeometry} update={update} setUpdate={setUpdate} setActiveGeometry={setActiveGeometry}/>

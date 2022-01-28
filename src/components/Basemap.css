@@ -6,10 +6,30 @@
     overflow: scroll;
     background-color: white;
     position: absolute;
-    padding: 5px 5px;
+    padding: 5px 2px;
     left: 0;
     z-index: 10000;
     transition: 500ms;
+}
+
+/* width */
+.basemap-container::-webkit-scrollbar {
+    width: 10px;
+  }
+  
+  /* Track */
+  .basemap-container::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+  
+  /* Handle */
+  .basemap-container::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.7);
+  }
+  
+  /* Handle on hover */
+  .basemap-container::-webkit-scrollbar-thumb:hover {
+    background: rgba(20, 20, 20, 0.8);
 }
 
 .item-basemap{

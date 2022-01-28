@@ -9,7 +9,7 @@ function Profile({setLogin,setActivePermohonan,setTambahAnggota}) {
         setLogin(false)
         setTambahAnggota(false)
     }
- 
+  
     return (
         <div className='profile-container'>
             <AiOutlineUser style={{width:"80px" ,height:"80px",color:"black"}}/>

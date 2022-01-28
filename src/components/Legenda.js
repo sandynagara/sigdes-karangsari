@@ -33,7 +33,7 @@ function Legenda({open}) {
         style={
             open === "Legenda" ? { marginLeft: "55px" } : { marginLeft: "-350px" }
         }>
-            <div>
+            <div> 
                 <p><b>Legenda</b></p>
             </div>
             <div>

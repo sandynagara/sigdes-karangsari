@@ -34,7 +34,6 @@
 
   var onChangeHandler = (e) => {
     var input = e.target.value
-    console.log(input)
     const url = configData.SERVER_URL+`caripenduduk/${input}`
     Panggil(hasil=>{
       setList(hasil)
@@ -159,16 +158,16 @@
                     >
                         <Changedview center={position} />
                         <CustomWMSLayer
-                            url="http://localhost:8080/geoserver/data/wms?"
-                            layers={"data:bismillah"}
-                            options={{
-                                format: "image/png",
-                                transparent: "true",
-                                tiled: "true",
-                                info_format: "application/json",
-                                identify: false,
-                                maxZoom: 22,
-                            }}
+                          url={configData.SERVER_GEOSERVER+"geoserver/karangsari/wms?"}
+                          layers={"karangsari:bismillah"}
+                          options={{
+                            format: "image/png",
+                            transparent: "true",
+                            tiled: "true",
+                            info_format: "application/json",
+                            identify: false,
+                            maxZoom: 22,
+                          }}
                         />
                         <FeatureGroup>
                             <EditControl
