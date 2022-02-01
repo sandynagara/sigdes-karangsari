@@ -2,6 +2,7 @@ import React,{useEffect,useState,useRef} from 'react'
 import './Login.css'
 import Profile from './Profile'
 import Permohonan from './Permohonan'
+import Swal from 'sweetalert2'
 import LogoLoading from "../images/Loading.svg"
 import TambahAnggota from './TambahAnggota'
 import configData from "./config.json";
@@ -42,9 +43,19 @@ function LoginPage({setLogin}){
         .then(json=>{
             setLoading(false)
             if(json.RTN){
+                Swal.fire({
+                    icon: 'success',
+                    title:'Anda berhasil login',
+                    timer: 2000,
+                    }
+                )
                 setLogin(true)
             }else{
-                alert(json.MSG)
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Maaf',
+                    text: 'Username / Password yang anda masukkan salah',
+                })
             }
         })
         .catch(err => console.log(err))

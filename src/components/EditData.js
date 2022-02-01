@@ -4,6 +4,7 @@
  import "leaflet/dist/leaflet.css";
  import "leaflet-draw/dist/leaflet.draw.css";
  import * as WMS from "leaflet.wms";
+ import Swal from 'sweetalert2';
  import { EditControl } from "react-leaflet-draw";
  import LogoLoading from "../images/Loading.svg"
  import configData from "./config.json";
@@ -136,8 +137,17 @@
       }).then(response=> response.json())
       .then(json=> {setLoading(false);
                   setActiveEdit(false)
-                  alert("Permohonan berhasil diajukan") })
-      .catch(err => alert("Permohona gagal diajukan"))
+                  Swal.fire({
+                    icon: 'success',
+                    title:'Permohonan berhasil diajukan',
+                    timer: 2000,
+                    }
+                )})
+      .catch(err => Swal.fire({
+        icon: 'error',
+        title: 'Maaf',
+        text: 'Permohonan gagal diajukan',
+        }))
       }
 
      return (

@@ -11,7 +11,7 @@ function Backgroud() {
         <div class="button-background">
         {/* <button className="about"><h6><b>ABOUT</b></h6></button> */}
           <a href="http://karangsari-kulonprogo.desa.id/index.php/first">
-            <button className="masuk webdesa" type="button"><h6><b>MASUK WEB DESA</b></h6></button>
+            <button className="masuk webdesa" type="button"><h6>MASUK WEB DESA</h6></button>
           </a>
           <Link to={"/dashboard"}>
             <button className="masuk sigdes" type="button"><h6><b>MASUK SIGDES</b></h6></button>
